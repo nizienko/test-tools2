@@ -1,0 +1,27 @@
+@import "../runo/runo.scss";
+
+@mixin mytheme {
+  @include runo;
+
+  /* An actual theme rule */
+  .v-table tr.v-selected {
+    background: #57a7ed;
+    color: #0404B4;
+  }
+
+  .v-table-cell-content-passed {
+    background: #9FF781;
+  }
+
+  .v-table-cell-content-passed_sometimes {
+    background: #D8F781;
+  }
+
+  .v-table-cell-content-failed {
+    background: #F78181;
+  }
+
+  .v-table-cell-content-not_run {
+    background: #CED8F6;
+  }
+}
