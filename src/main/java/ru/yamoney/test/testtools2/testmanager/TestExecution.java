@@ -1,5 +1,7 @@
 package ru.yamoney.test.testtools2.testmanager;
 
+import java.util.Date;
+
 /**
  * Created by def on 02.04.15.
  */
@@ -11,6 +13,8 @@ public class TestExecution {
     private String execution;
     private String issue;
     private String name;
+    private Date executionDt;
+    private Date lastChangeDt;
     private Integer status;
     private String comment;
     private int isPublicated;
@@ -93,5 +97,22 @@ public class TestExecution {
 
     public void setPublicated(int isPublicated) {
         this.isPublicated = isPublicated;
+        this.setLastChangeDt(new Date());
+    }
+
+    public Date getExecutionDt() {
+        return executionDt;
+    }
+
+    public void setExecutionDt(Date executionDt) {
+        this.executionDt = executionDt;
+    }
+
+    public Date getLastChangeDt() {
+        return lastChangeDt;
+    }
+
+    public void setLastChangeDt(Date lastChangeDt) {
+        this.lastChangeDt = lastChangeDt;
     }
 }

@@ -23,6 +23,8 @@ public class TestExecutionMapper implements RowMapper<TestExecution> {
         te.setIssue(resultSet.getString("issue"));
         te.setName(resultSet.getString("name"));
         te.setPublicated(resultSet.getInt("publicated_status"));
+        te.setExecutionDt(resultSet.getTimestamp("execution_dt"));
+        te.setLastChangeDt(resultSet.getTimestamp("last_change_dt"));
         return te;
     }
 }

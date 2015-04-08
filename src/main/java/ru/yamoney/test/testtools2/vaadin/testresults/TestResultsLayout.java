@@ -7,11 +7,15 @@ import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Created by def on 08.04.15.
  */
 public class TestResultsLayout extends VerticalLayout {
     private Table table;
+    private DateFormat dateFormat;
 
     public TestResultsLayout(){
         this.setSizeFull();
@@ -26,6 +30,7 @@ public class TestResultsLayout extends VerticalLayout {
         table.addContainerProperty("Issue", String.class, null);
         table.addContainerProperty("Name", String.class, null);
         table.addContainerProperty("Comment", String.class, null);
+        table.addContainerProperty("Date", Date.class, null);
         table.addContainerProperty("Status", String.class, null);
         table.setCellStyleGenerator(new Table.CellStyleGenerator() {
             @Override
@@ -64,6 +69,7 @@ public class TestResultsLayout extends VerticalLayout {
                     te.getIssue(),
                     te.getName(),
                     te.getComment(),
+                    te.getExecutionDt(),
                     status
             }, new Integer(i));
             i++;

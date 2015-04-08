@@ -2,7 +2,6 @@ package ru.yamoney.test.testtools2.rest;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.springframework.beans.BeansException;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.testmanager.TestManager;
@@ -13,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 
 /**
  * Created by def on 02.04.15.
@@ -83,6 +83,7 @@ public class TestExecutionService {
         testExecution.setName(name);
         testExecution.setStatus(executionStatus);
         testExecution.setComment(comment);
+        testExecution.setExecutionDt(new Date());
         try {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
