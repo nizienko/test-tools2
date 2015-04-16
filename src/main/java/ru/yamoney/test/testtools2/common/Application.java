@@ -13,9 +13,11 @@ import java.util.List;
 public class Application {
     public static final Logger LOG = Logger.getLogger(Application.class);
     private static List<ApplicationThread> apps;
+    private static boolean embeddedServerMode = false;
 
     private static ApplicationContext ctx = null;
     public static void main(String[] args) {
+        embeddedServerMode = true;
         apps = new ArrayList<>();
         getCtx();
     }
@@ -44,5 +46,9 @@ public class Application {
             ctx = new ClassPathXmlApplicationContext("beans.xml");
         }
         return ctx;
+    }
+
+    public static boolean isEmbeddedServerMode() {
+        return embeddedServerMode;
     }
 }

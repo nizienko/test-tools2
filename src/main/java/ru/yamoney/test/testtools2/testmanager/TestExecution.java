@@ -1,5 +1,9 @@
 package ru.yamoney.test.testtools2.testmanager;
 
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 
 /**
@@ -17,7 +21,49 @@ public class TestExecution {
     private Date lastChangeDt;
     private Integer status;
     private String comment;
-    private int isPublicated;
+    private Integer publicated;
+    public static final Logger LOG = Logger.getLogger(TestExecution.class);
+
+
+    public JSONObject getJSON(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("project", project);
+            jsonObject.put("version", version);
+            jsonObject.put("build", build);
+            jsonObject.put("execution", execution);
+            jsonObject.put("issue",  issue);
+            jsonObject.put("name",  name);
+            jsonObject.put("status", status + "");
+            jsonObject.put("comment", comment);
+            jsonObject.put("publicated", publicated + "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        LOG.info(jsonObject.toString());
+        return jsonObject;
+    }
+
+    public String getData(){
+        return getJSON().toString();
+    }
+
+    public void setData(String data){
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            project = (String) jsonObject.get("project");
+            version = (String) jsonObject.get("version");
+            build = (String) jsonObject.get("build");
+            execution = (String) jsonObject.get("execution");
+            issue = (String) jsonObject.get("issue");
+            name = (String) jsonObject.get("name");
+            status = Integer.parseInt((String) jsonObject.get("status"));
+            comment = (String) jsonObject.get("comment");
+            publicated = Integer.parseInt((String) jsonObject.get("publicated"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     public int getId() {
         return id;
@@ -91,12 +137,12 @@ public class TestExecution {
         this.comment = comment;
     }
 
-    public int isPublicated() {
-        return isPublicated;
+    public Integer isPublicated() {
+        return publicated;
     }
 
-    public void setPublicated(int isPublicated) {
-        this.isPublicated = isPublicated;
+    public void setPublicated(Integer isPublicated) {
+        this.publicated = isPublicated;
         this.setLastChangeDt(new Date());
     }
 

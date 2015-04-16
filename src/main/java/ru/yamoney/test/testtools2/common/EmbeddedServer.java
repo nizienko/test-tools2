@@ -23,7 +23,12 @@ public class EmbeddedServer extends AbstractDaemon implements ApplicationThread{
     }
 
     public void init() {
-        Application.addThread(this);
+        if (Application.isEmbeddedServerMode()){
+            Application.addThread(this);
+        }
+        else {
+            LOG.info("No need to run " + this);
+        }
     }
 
     public void process() {

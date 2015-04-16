@@ -3,6 +3,7 @@ package ru.yamoney.test.testtools2.db;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,39 +17,33 @@ public class TestExecutionDao {
     }
 
     public void insert(TestExecution te){
-        String SQL = "INSERT INTO test_execution(\n" +
-                "            project, version, build, execution, issue, name, status, \n" +
-                "            comment, execution_dt)\n" +
-                "    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String SQL = "INSERT INTO execution(\n" +
+                "            data, execution_dt, last_change_dt)\n" +
+                "    VALUES (?::jsonb, ?, ?);";
         jdbcTemplate.update(SQL, new Object[]{
-                te.getProject(), te.getVersion(), te.getBuild(), te.getExecution(), te.getIssue(), te.getName(), te.getStatus(),
-                te.getComment(), te.getExecutionDt()
+                te.getData(), te.getExecutionDt(), new Date()
         });
     }
 
     public List<TestExecution> getAll() {
-        String SQL = "SELECT id, project, version, build, execution, issue, name, status, \n" +
-                "       comment, publicated_status, execution_dt, last_change_dt\n" +
-                "  FROM test_execution;\n";
+        String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
+                "  FROM execution;\n";
         return jdbcTemplate.query(SQL, new TestExecutionMapper());
     }
 
     public List<TestExecution> getNotPublished(){
-        String SQL = "SELECT id, project, version, build, execution, issue, name, status, \n" +
-                "       comment, publicated_status, execution_dt, last_change_dt\n" +
-                "  FROM test_execution where publicated_status=0;\n";
+        String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
+                "  FROM execution where data->>'publicated' = '0';\n";
         return jdbcTemplate.query(SQL, new TestExecutionMapper());
     }
 
     public void updateTestExecution(TestExecution te) {
-        String SQL = "UPDATE test_execution\n" +
-                "   SET project=?, version=?, build=?, execution=?, issue=?, name=?, \n" +
-                "       status=?, comment=?, publicated_status=?, execution_dt=?, last_change_dt=? \n" +
+        String SQL = "UPDATE execution\n" +
+                "   SET data=?::jsonb, execution_dt=?, last_change_dt=? \n" +
                 " WHERE id=?";
 
         jdbcTemplate.update(SQL, new Object[]{
-            te.getProject(), te.getVersion(), te.getBuild(), te.getExecution(), te.getIssue(), te.getName(),
-                te.getStatus(), te.getComment(), te.isPublicated(), te.getExecutionDt(), te.getLastChangeDt(), te.getId()
+                te.getData(), te.getExecutionDt(), new Date(), te.getId()
         });
     }
 

@@ -84,6 +84,7 @@ public class TestExecutionService {
         testExecution.setStatus(executionStatus);
         testExecution.setComment(comment);
         testExecution.setExecutionDt(new Date());
+        testExecution.setPublicated(0);
         try {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
