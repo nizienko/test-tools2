@@ -77,8 +77,6 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         });
         this.addComponent(buildSelect);
 
-
-
     }
 
     private void updateProjectSelect(){
