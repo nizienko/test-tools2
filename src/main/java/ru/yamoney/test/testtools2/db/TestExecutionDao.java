@@ -2,9 +2,11 @@ package ru.yamoney.test.testtools2.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
+import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by def on 02.04.15.
@@ -47,4 +49,25 @@ public class TestExecutionDao {
         });
     }
 
+    public List<TestExecution> getByFilter(TestResultsFilter filter) {
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT id, data, execution_dt, last_change_dt FROM execution");
+        sqlText.append(filter.getSql());
+        sqlText.append(";");
+        String SQL = sqlText.toString();
+        System.out.println(SQL);
+        return jdbcTemplate.query(SQL, filter.getObjects(), new TestExecutionMapper());
+    }
+
+    public List<java.util.Map<String, Object>> selectProjects(){
+        String SQL = "SELECT distinct data->>'project' AS project FROM execution;";
+
+        return jdbcTemplate.queryForList(SQL);
+    }
+
+    public List<Map<String, Object>> selectVersions(TestResultsFilter filter) {
+        String SQL = "SELECT distinct data->>'version' AS version FROM execution where " +
+                "data->>'project'=?";
+        return jdbcTemplate.queryForList(SQL, filter.getProject());
+    }
 }
