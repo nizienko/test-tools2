@@ -70,4 +70,10 @@ public class TestExecutionDao {
                 "data->>'project'=?";
         return jdbcTemplate.queryForList(SQL, filter.getProject());
     }
+
+    public List<Map<String, Object>> selectBuilds(TestResultsFilter filter) {
+        String SQL = "SELECT distinct data->>'build' AS build FROM execution where " +
+                "data->>'project'=? and data->>'version'=?";
+        return jdbcTemplate.queryForList(SQL, filter.getProject(), filter.getVersion());
+    }
 }

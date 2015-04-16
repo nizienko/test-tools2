@@ -18,6 +18,7 @@ import java.util.Map;
 public class TestResultsFilterLayout extends HorizontalLayout {
     private ListSelect projectSelect;
     private ListSelect versionSelect;
+    private ListSelect buildSelect;
     private DateField sinceDate;
     private DateField toDate;
     private DaoContainer daoContainer;
@@ -27,8 +28,8 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         this.daoContainer = daoContainer;
 
         // date
-        sinceDate = new DateField();
-        toDate = new DateField();
+        sinceDate = new DateField("Since");
+        toDate = new DateField("To");
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, 8);
         toDate.setValue(calendar.getTime());
@@ -38,7 +39,8 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         toDate.setResolution(Resolution.MINUTE);
         filter.setSinceDate(sinceDate.getValue());
         filter.setToDate(toDate.getValue());
-
+        this.addComponent(sinceDate);
+        this.addComponent(toDate);
 
         // component/version/build/execution
         projectSelect = new ListSelect("Project");
@@ -60,11 +62,22 @@ public class TestResultsFilterLayout extends HorizontalLayout {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
                 filter.setVersion((String) event.getProperty().getValue());
+                updateBuildSelect();
             }
         });
         this.addComponent(versionSelect);
-        this.addComponent(sinceDate);
-        this.addComponent(toDate);
+
+        buildSelect = new ListSelect("Build");
+        buildSelect.setRows(1);
+        buildSelect.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                filter.setBuild((String) event.getProperty().getValue());
+            }
+        });
+        this.addComponent(buildSelect);
+
+
 
     }
 
@@ -79,6 +92,13 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         versionSelect.removeAllItems();
         for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectVersions(filter)) {
             versionSelect.addItem(p.get("version"));
+        }
+    }
+
+    private void updateBuildSelect(){
+        buildSelect.removeAllItems();
+        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectBuilds(filter)) {
+            buildSelect.addItem(p.get("build"));
         }
     }
 
