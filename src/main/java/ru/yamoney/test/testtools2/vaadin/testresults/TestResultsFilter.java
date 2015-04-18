@@ -13,6 +13,7 @@ public class TestResultsFilter {
     private String build;
     private String execution;
     private String issue;
+    private String issueTemp;
     private String status;
     private Date sinceDate;
     private Date toDate;
@@ -25,6 +26,7 @@ public class TestResultsFilter {
         build = null;
         execution = null;
         issue = null;
+        issueTemp = null;
         status = null;
         objects = new ArrayList<>();
     }
@@ -71,6 +73,10 @@ public class TestResultsFilter {
         this.issue = issue;
     }
 
+    public void setIssueTemp(String issue){
+        this.issueTemp = issue;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -108,6 +114,26 @@ public class TestResultsFilter {
         if (version != null && !"".equals(version)) {
             sql.append(" and data->>'version'=?");
             objects.add(version);
+        }
+        if (build != null && !"".equals(build)) {
+            sql.append(" and data->>'build'=?");
+            objects.add(build);
+        }
+        if (execution != null && !"".equals(execution)) {
+            sql.append(" and data->>'execution'=?");
+            objects.add(execution);
+        }
+        if (issue != null && !"".equals(issue)) {
+            sql.append(" and data->>'issue'=?");
+            objects.add(issue);
+        }
+        else if (issueTemp != null && !"".equals(issueTemp)){
+            sql.append(" and data->>'issue'=?");
+            objects.add(issueTemp);
+        }
+        if (status != null && !"".equals(status)) {
+            sql.append(" and data->>'status'=?");
+            objects.add(status);
         }
         return sql.toString();
     }

@@ -2,10 +2,7 @@ package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.*;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 
 import java.text.SimpleDateFormat;
@@ -19,11 +16,13 @@ public class TestResultsFilterLayout extends HorizontalLayout {
     private ListSelect projectSelect;
     private ListSelect versionSelect;
     private ListSelect buildSelect;
+    private ListSelect executionSelect;
+    private TextField issueTextField;
     private DateField sinceDate;
     private DateField toDate;
     private DaoContainer daoContainer;
     private TestResultsFilter filter = new TestResultsFilter();
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final String WIDTH = "90";
     public TestResultsFilterLayout(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
 
@@ -45,6 +44,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         // component/version/build/execution
         projectSelect = new ListSelect("Project");
         projectSelect.setRows(1);
+        projectSelect.setWidth(WIDTH);
         projectSelect.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
@@ -58,6 +58,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
 
         versionSelect = new ListSelect("Version");
         versionSelect.setRows(1);
+        versionSelect.setWidth(WIDTH);
         versionSelect.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
@@ -69,14 +70,30 @@ public class TestResultsFilterLayout extends HorizontalLayout {
 
         buildSelect = new ListSelect("Build");
         buildSelect.setRows(1);
+        buildSelect.setWidth(WIDTH);
         buildSelect.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
                 filter.setBuild((String) event.getProperty().getValue());
+                updateExecutionSelect();
+
             }
         });
         this.addComponent(buildSelect);
 
+        executionSelect = new ListSelect("Execution");
+        executionSelect.setRows(1);
+        executionSelect.setWidth(WIDTH);
+        executionSelect.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                filter.setExecution((String) event.getProperty().getValue());
+            }
+        });
+        this.addComponent(executionSelect);
+        issueTextField = new TextField("Issue");
+        issueTextField.setWidth(WIDTH);
+        this.addComponent(issueTextField);
     }
 
     private void updateProjectSelect(){
@@ -100,7 +117,17 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         }
     }
 
+    private void updateExecutionSelect(){
+        executionSelect.removeAllItems();
+        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectExecutions(filter)) {
+            executionSelect.addItem(p.get("execution"));
+        }
+    }
+
     public TestResultsFilter getFilter(){
+        filter.setSinceDate(sinceDate.getValue());
+        filter.setToDate(toDate.getValue());
+        filter.setIssue(issueTextField.getValue());
         return filter;
     }
 }

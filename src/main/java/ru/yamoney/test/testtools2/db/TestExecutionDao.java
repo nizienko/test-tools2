@@ -1,6 +1,8 @@
 package ru.yamoney.test.testtools2.db;
 
+import org.omg.PortableInterceptor.LOCATION_FORWARD;
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
 
@@ -53,11 +55,29 @@ public class TestExecutionDao {
         StringBuffer sqlText = new StringBuffer();
         sqlText.append("SELECT id, data, execution_dt, last_change_dt FROM execution");
         sqlText.append(filter.getSql());
+        sqlText.append(" order by execution_dt desc limit 10000;");
+        String SQL = sqlText.toString();
+        return jdbcTemplate.query(SQL, filter.getObjects(), new TestExecutionMapper());
+    }
+
+    public Integer countByFilter(TestResultsFilter filter) {
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT count(*) FROM execution");
+        sqlText.append(filter.getSql());
         sqlText.append(";");
         String SQL = sqlText.toString();
         System.out.println(SQL);
-        return jdbcTemplate.query(SQL, filter.getObjects(), new TestExecutionMapper());
+        return jdbcTemplate.queryForObject(SQL, filter.getObjects(), Integer.class);
     }
+
+    public TestExecution getLastPassed(String issue) {
+        String SQL = "SELECT id, data, execution_dt, last_change_dt FROM execution " +
+                "where data->>'status'=? and data->>'issue'=? " +
+                "order by execution_dt desc limit 1;";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{
+                ExecutionStatus.PASSED.getValue(), issue}, new TestExecutionMapper());
+    }
+
 
     public List<java.util.Map<String, Object>> selectProjects(){
         String SQL = "SELECT distinct data->>'project' AS project FROM execution;";
@@ -75,5 +95,25 @@ public class TestExecutionDao {
         String SQL = "SELECT distinct data->>'build' AS build FROM execution where " +
                 "data->>'project'=? and data->>'version'=?";
         return jdbcTemplate.queryForList(SQL, filter.getProject(), filter.getVersion());
+    }
+
+    public List<Map<String, Object>> selectExecutions(TestResultsFilter filter) {
+        String SQL = "SELECT distinct data->>'execution' AS execution FROM execution where " +
+                "data->>'project'=? and data->>'version'=? and data->>'build'=?";
+        return jdbcTemplate.queryForList(SQL, filter.getProject(), filter.getVersion(), filter.getBuild());
+    }
+
+    public List<Map<String, Object>> selectIssues(TestResultsFilter filter) {
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT distinct data->>'issue' AS issue FROM execution");
+        sqlText.append(filter.getSql());
+        sqlText.append(" order by issue;");
+        String SQL = sqlText.toString();
+        return jdbcTemplate.queryForList(SQL, filter.getObjects());
+    }
+
+    public String getNameByIssue(String issue){
+        String SQL = "SELECT data->>'name' AS name from execution where data->>'issue'=? order by execution_dt desc limit 1";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{issue}, String.class);
     }
 }

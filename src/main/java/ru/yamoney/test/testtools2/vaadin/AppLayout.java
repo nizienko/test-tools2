@@ -5,6 +5,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsLayout;
+import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsTabSheet;
 
 /**
  * Created by def on 08.04.15.
@@ -15,6 +16,6 @@ public class AppLayout extends GridLayout {
         this.setRowExpandRatio(1, 1);
         this.setSizeFull();
         this.addComponent(new Link("Stop", new ExternalResource("/rest/manage/stop")));
-        this.addComponent(new TestResultsLayout());
+        this.addComponent(new TestResultsTabSheet());
     }
 }

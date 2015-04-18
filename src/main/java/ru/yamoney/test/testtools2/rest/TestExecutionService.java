@@ -81,6 +81,7 @@ public class TestExecutionService {
         testExecution.setExecution(execution);
         testExecution.setIssue(issue);
         testExecution.setName(name);
+        LOG.info(name);
         testExecution.setStatus(executionStatus);
         testExecution.setComment(comment);
         testExecution.setExecutionDt(new Date());

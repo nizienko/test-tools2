@@ -17,7 +17,6 @@ import java.util.Date;
  */
 public class TestResultsLayout extends GridLayout {
     private Table table;
-    private DateFormat dateFormat;
     private TestResultsFilterLayout testResultsFilterLayout;
     private Button updateButton;
     private DaoContainer daoContainer;

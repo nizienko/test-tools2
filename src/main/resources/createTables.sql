@@ -11,3 +11,23 @@ WITH (
 );
 ALTER TABLE execution
   OWNER TO postgres;
+
+
+
+CREATE INDEX execution_project_index ON
+      execution ((data->>'project'));
+
+CREATE INDEX execution_version_index ON
+      execution ((data->>'version'));
+
+CREATE INDEX execution_build_index ON
+      execution ((data->>'build'));
+
+CREATE INDEX execution_execution_index ON
+      execution ((data->>'execution'));
+
+CREATE INDEX execution_issue_index ON
+      execution ((data->>'issue'));
+
+CREATE INDEX execution_status_index ON
+      execution ((data->>'status'));
