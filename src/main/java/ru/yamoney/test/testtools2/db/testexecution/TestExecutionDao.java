@@ -1,6 +1,5 @@
-package ru.yamoney.test.testtools2.db;
+package ru.yamoney.test.testtools2.db.testexecution;
 
-import org.omg.PortableInterceptor.LOCATION_FORWARD;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;

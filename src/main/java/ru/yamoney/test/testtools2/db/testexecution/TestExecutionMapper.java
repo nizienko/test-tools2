@@ -1,4 +1,4 @@
-package ru.yamoney.test.testtools2.db;
+package ru.yamoney.test.testtools2.db.testexecution;
 
 import org.springframework.jdbc.core.RowMapper;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;

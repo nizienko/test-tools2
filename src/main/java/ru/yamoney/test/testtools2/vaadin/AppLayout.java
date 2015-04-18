@@ -1,11 +1,8 @@
 package ru.yamoney.test.testtools2.vaadin;
 
-import com.vaadin.server.ExternalResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.Table;
-import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsLayout;
-import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsTabSheet;
+import com.vaadin.ui.Label;
 
 /**
  * Created by def on 08.04.15.
@@ -15,7 +12,7 @@ public class AppLayout extends GridLayout {
         super(1, 2);
         this.setRowExpandRatio(1, 1);
         this.setSizeFull();
-        this.addComponent(new Link("Stop", new ExternalResource("/rest/manage/stop")));
-        this.addComponent(new TestResultsTabSheet());
+        this.addComponent(new Label("<h2>Test tools</h2>", ContentMode.HTML));
+        this.addComponent(new TestToolsTabSheet());
     }
 }
