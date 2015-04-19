@@ -7,8 +7,12 @@
     <groupId>ru.yamoney.test</groupId>
     <artifactId>test-tools2</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-
+    <repositories>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.1.RELEASE</spring.version>
@@ -128,5 +132,10 @@
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+<!--        <dependency>
+            <groupId>at.downdrown.vaadinaddons</groupId>
+            <artifactId>highchartsapi</artifactId>
+            <version>1.7.2</version>
+        </dependency>-->
     </dependencies>
 </project>

@@ -21,8 +21,8 @@ public class TestResultsFilterLayout extends HorizontalLayout {
     private DateField sinceDate;
     private DateField toDate;
     private DaoContainer daoContainer;
-    private TestResultsFilter filter = new TestResultsFilter();
-    private final String WIDTH = "90";
+    protected TestResultsFilter filter = new TestResultsFilter();
+    protected final String WIDTH = "90";
     public TestResultsFilterLayout(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
 

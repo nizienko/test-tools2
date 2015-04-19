@@ -138,6 +138,23 @@ public class TestResultsFilter {
         return sql.toString();
     }
 
+    public String toString(){
+        StringBuffer str = new StringBuffer();
+        if (project != null) {
+            str.append(project);
+        }
+        if (version != null) {
+            str.append(" " + version);
+        }
+        if (build != null) {
+            str.append(" " + build);
+        }
+        if (execution != null) {
+            str.append(" " + execution);
+        }
+        return str.toString();
+    }
+
     public Object[] getObjects(){
         return objects.toArray();
     }

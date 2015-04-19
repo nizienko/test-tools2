@@ -15,4 +15,8 @@ public enum ExecutionStatus {
         return value+"";
     }
 
+    public Integer getIntegerValue(){
+        return value;
+    }
+
 }

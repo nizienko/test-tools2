@@ -65,7 +65,6 @@ public class TestExecutionDao {
         sqlText.append(filter.getSql());
         sqlText.append(";");
         String SQL = sqlText.toString();
-        System.out.println(SQL);
         return jdbcTemplate.queryForObject(SQL, filter.getObjects(), Integer.class);
     }
 
@@ -77,29 +76,49 @@ public class TestExecutionDao {
                 ExecutionStatus.PASSED.getValue(), issue}, new TestExecutionMapper());
     }
 
-
-    public List<java.util.Map<String, Object>> selectProjects(){
-        String SQL = "SELECT distinct data->>'project' AS project FROM execution;";
-
-        return jdbcTemplate.queryForList(SQL);
+    public List<java.util.Map<String, Object>> selectProjects() {
+        return selectProjects(null);
+    }
+    public List<java.util.Map<String, Object>> selectProjects(TestResultsFilter filter){
+        if (filter == null) {
+            String SQL = "SELECT distinct data->>'project' AS project FROM execution;";
+            return jdbcTemplate.queryForList(SQL);
+        }
+        else {
+            StringBuffer sqlText = new StringBuffer();
+            sqlText.append("SELECT distinct data->>'project' AS project FROM execution");
+            sqlText.append(filter.getSql());
+            sqlText.append(" order by project;");
+            String SQL = sqlText.toString();
+            return jdbcTemplate.queryForList(SQL, filter.getObjects());
+        }
     }
 
     public List<Map<String, Object>> selectVersions(TestResultsFilter filter) {
-        String SQL = "SELECT distinct data->>'version' AS version FROM execution where " +
-                "data->>'project'=?";
-        return jdbcTemplate.queryForList(SQL, filter.getProject());
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT distinct data->>'version' AS version FROM execution");
+        sqlText.append(filter.getSql());
+        sqlText.append(" order by version desc;");
+        String SQL = sqlText.toString();
+        return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectBuilds(TestResultsFilter filter) {
-        String SQL = "SELECT distinct data->>'build' AS build FROM execution where " +
-                "data->>'project'=? and data->>'version'=?";
-        return jdbcTemplate.queryForList(SQL, filter.getProject(), filter.getVersion());
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT distinct data->>'build' AS build FROM execution");
+        sqlText.append(filter.getSql());
+        sqlText.append(" order by build desc;");
+        String SQL = sqlText.toString();
+        return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectExecutions(TestResultsFilter filter) {
-        String SQL = "SELECT distinct data->>'execution' AS execution FROM execution where " +
-                "data->>'project'=? and data->>'version'=? and data->>'build'=?";
-        return jdbcTemplate.queryForList(SQL, filter.getProject(), filter.getVersion(), filter.getBuild());
+        StringBuffer sqlText = new StringBuffer();
+        sqlText.append("SELECT distinct data->>'execution' AS execution FROM execution");
+        sqlText.append(filter.getSql());
+        sqlText.append(" order by execution desc;");
+        String SQL = sqlText.toString();
+        return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectIssues(TestResultsFilter filter) {

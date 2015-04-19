@@ -1,24 +1,27 @@
 package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Item;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.*;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
 import java.text.DateFormat;
 import java.util.Date;
+
+import static ru.yamoney.test.testtools2.testmanager.ExecutionStatus.*;
 
 /**
  * Created by def on 08.04.15.
  */
 public class TestResultsLayout extends GridLayout {
     private Table table;
-    private TestResultsFilterLayout testResultsFilterLayout;
+    private TestResultsFilterWithStatusLayout testResultsFilterLayout;
     private Button updateButton;
+    private Button exportButton;
+
     private DaoContainer daoContainer;
 
     public TestResultsLayout() {
@@ -27,8 +30,9 @@ public class TestResultsLayout extends GridLayout {
         this.setSizeFull();
         daoContainer = (DaoContainer) Application.getCtx().getBean("daoContainer");
 
-        testResultsFilterLayout = new TestResultsFilterLayout(daoContainer);
+        testResultsFilterLayout = new TestResultsFilterWithStatusLayout(daoContainer);
         this.addComponent(testResultsFilterLayout);
+        HorizontalLayout buttonsLayout= new HorizontalLayout();
         updateButton = new Button("Update");
         updateButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -36,7 +40,19 @@ public class TestResultsLayout extends GridLayout {
                 update();
             }
         });
-        this.addComponent(updateButton);
+
+        exportButton = new Button("Text");
+        exportButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                export();
+            }
+        });
+
+        buttonsLayout.addComponent(updateButton);
+        buttonsLayout.addComponent(exportButton);
+        this.addComponent(buttonsLayout);
+
         table = new Table();
         table.setWidth("100%");
         table.setHeight("100%");
@@ -71,7 +87,6 @@ public class TestResultsLayout extends GridLayout {
             }
         });
         this.addComponent(table);
-        update();
     }
 
     private void update(){
@@ -96,5 +111,30 @@ public class TestResultsLayout extends GridLayout {
             }, new Integer(i));
             i++;
         }
+    }
+
+    private void export(){
+        TestResultsFilter filter = testResultsFilterLayout.getFilter();
+        Window exportWindow = new Window(filter.toString());
+        exportWindow.setWidth("700px");
+        exportWindow.setHeight("600px");
+
+        TextArea textLabel = new TextArea();
+        textLabel.setSizeFull();
+        exportWindow.center();
+        exportWindow.setContent(textLabel);
+        StringBuffer text = new StringBuffer();
+        for (TestExecution te : daoContainer.getTestExecutionDao().getByFilter(testResultsFilterLayout.getFilter())) {
+            String status = "failed";
+            if (te.getStatus() == PASSED.getIntegerValue()) {
+                status = "passed";
+            }
+            else if (te.getStatus() == PROCESSING.getIntegerValue()){
+                status = "processing";
+            }
+            text.append(te.getIssue() + ": " + te.getName() + " (" + te.getComment() + ") - " + status + "\n");
+        }
+        textLabel.setValue(text.toString());
+        UI.getCurrent().addWindow(exportWindow);
     }
 }
