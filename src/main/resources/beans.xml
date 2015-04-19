@@ -6,34 +6,34 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <bean id="embedded-server" class="ru.yamoney.test.testtools2.common.EmbeddedServer" init-method="init">
-        <constructor-arg value="20" />
-        <property name="port" value="8080" />
-        <property name="webXml" value="src/main/webapp" />
+        <constructor-arg value="20"/>
+        <property name="port" value="8080"/>
+        <property name="webXml" value="src/main/webapp"/>
     </bean>
 
     <bean id="datasource" class="org.postgresql.jdbc3.Jdbc3PoolingDataSource">
-        <property name="serverName" value="127.0.0.1" />
-        <property name="databaseName" value="testresults" />
-        <property name="portNumber" value="5432" />
-        <property name="user" value="postgres" />
-        <property name="password" value="postgres" />
+        <property name="serverName" value="127.0.0.1"/>
+        <property name="databaseName" value="testresults"/>
+        <property name="portNumber" value="5432"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="postgres"/>
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="datasource" />
+        <property name="dataSource" ref="datasource"/>
     </bean>
 
     <bean id="daoContainer" class="ru.yamoney.test.testtools2.db.DaoContainer">
-        <constructor-arg ref="jdbcTemplate" />
+        <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
     <bean id="testManager" class="ru.yamoney.test.testtools2.testmanager.TestManager">
-        <constructor-arg ref="daoContainer" />
+        <constructor-arg ref="daoContainer"/>
     </bean>
 
     <bean id="publisher" class="ru.yamoney.test.testtools2.publisher.PublisherDaemon" init-method="init">
-        <constructor-arg value="10" />
-        <property name="daoContainer" ref="daoContainer" />
+        <constructor-arg value="10"/>
+        <property name="daoContainer" ref="daoContainer"/>
     </bean>
 
 </beans>
