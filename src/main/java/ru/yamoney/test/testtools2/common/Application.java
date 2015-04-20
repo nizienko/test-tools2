@@ -18,7 +18,6 @@ public class Application {
     private static ApplicationContext ctx = null;
     public static void main(String[] args) {
         embeddedServerMode = true;
-        apps = new ArrayList<>();
         getCtx();
     }
 
@@ -43,6 +42,7 @@ public class Application {
 
     public synchronized static ApplicationContext getCtx() {
         if (ctx == null) {
+            apps = new ArrayList<>();
             ctx = new ClassPathXmlApplicationContext("beans.xml");
         }
         return ctx;
