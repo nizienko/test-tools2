@@ -15,6 +15,7 @@ public class TestResultsFilter {
     private String issue;
     private String issueTemp;
     private String status;
+    private String failedReason;
     private Date sinceDate;
     private Date toDate;
     private List<Object> objects;
@@ -28,6 +29,7 @@ public class TestResultsFilter {
         issue = null;
         issueTemp = null;
         status = null;
+        failedReason = null;
         objects = new ArrayList<>();
     }
 
@@ -101,6 +103,14 @@ public class TestResultsFilter {
         this.toDate = toDate;
     }
 
+    public String getFailedReason() {
+        return failedReason;
+    }
+
+    public void setFailedReason(String failedReason) {
+        this.failedReason = failedReason;
+    }
+
     public String getSql() {
         objects.clear();
         StringBuffer sql = new StringBuffer();
@@ -134,6 +144,10 @@ public class TestResultsFilter {
         if (status != null && !"".equals(status)) {
             sql.append(" and data->>'status'=?");
             objects.add(status);
+        }
+        if (failedReason != null && !"".equals(failedReason)) {
+            sql.append(" and data->>'reason'=?");
+            objects.add(failedReason);
         }
         return sql.toString();
     }

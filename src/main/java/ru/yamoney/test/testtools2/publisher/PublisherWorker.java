@@ -4,17 +4,14 @@ import org.apache.log4j.Logger;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by def on 06.04.15.
  */
-public class Worker {
+public class PublisherWorker {
     private DaoContainer daoContainer;
-    public static final Logger LOG = Logger.getLogger(Worker.class);
+    public static final Logger LOG = Logger.getLogger(PublisherWorker.class);
 
-    public Worker(DaoContainer daoContainer) {
+    public PublisherWorker(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
     }
 

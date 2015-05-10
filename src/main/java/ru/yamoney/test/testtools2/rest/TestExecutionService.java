@@ -3,6 +3,7 @@ package ru.yamoney.test.testtools2.rest;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import ru.yamoney.test.testtools2.common.Application;
+import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.testmanager.TestManager;
 
@@ -85,11 +86,13 @@ public class TestExecutionService {
         testExecution.setComment(comment);
         testExecution.setExecutionDt(new Date());
         testExecution.setPublicated(0);
+        testExecution.setFailReason(ReasonStatus.NOT_SET.name());
         try {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
         }
         catch (Exception e) {
+            e.printStackTrace();
             LOG.error(e.getMessage());
             return Response.status(500).entity(buildJSONAnswer(-2, "Server error")).build();
         }

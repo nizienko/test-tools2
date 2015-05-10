@@ -31,7 +31,12 @@
         <constructor-arg ref="daoContainer"/>
     </bean>
 
-    <bean id="publisher" class="ru.yamoney.test.testtools2.publisher.PublisherDaemon" init-method="init">
+    <bean id="publisher" class="ru.yamoney.test.testtools2.publisher.PublisherDaemon" init-method="init" scope="singleton">
+        <constructor-arg value="10"/>
+        <property name="daoContainer" ref="daoContainer"/>
+    </bean>
+
+    <bean id="investigator" class="ru.yamoney.test.testtools2.investigator.InvestigatorDaemon" init-method="init" scope="singleton">
         <constructor-arg value="10"/>
         <property name="daoContainer" ref="daoContainer"/>
     </bean>

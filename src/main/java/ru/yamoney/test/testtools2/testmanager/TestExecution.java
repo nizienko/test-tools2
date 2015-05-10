@@ -22,6 +22,7 @@ public class TestExecution {
     private Integer status;
     private String comment;
     private Integer publicated;
+    private String failReason;
     public static final Logger LOG = Logger.getLogger(TestExecution.class);
 
 
@@ -37,6 +38,9 @@ public class TestExecution {
             jsonObject.put("status", status + "");
             jsonObject.put("comment", comment);
             jsonObject.put("publicated", publicated + "");
+            if (failReason != null) {
+                jsonObject.put("reason", failReason);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,6 +64,12 @@ public class TestExecution {
             status = Integer.parseInt((String) jsonObject.get("status"));
             comment = (String) jsonObject.get("comment");
             publicated = Integer.parseInt((String) jsonObject.get("publicated"));
+            try {
+                failReason = (String) jsonObject.get("reason");
+            }
+            catch (Exception e) {
+                failReason = null;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -160,5 +170,13 @@ public class TestExecution {
 
     public void setLastChangeDt(Date lastChangeDt) {
         this.lastChangeDt = lastChangeDt;
+    }
+
+    public String getFailReason() {
+        return failReason;
+    }
+
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
     }
 }

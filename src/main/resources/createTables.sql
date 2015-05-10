@@ -76,3 +76,6 @@ CREATE INDEX execution_issue_index ON
 
 CREATE INDEX execution_status_index ON
       execution ((data->>'status'));
+
+CREATE INDEX execution_status_index ON
+      execution ((data->>'reason'));
