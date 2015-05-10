@@ -4,6 +4,7 @@ import com.vaadin.data.Item;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Table;
+import org.apache.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.db.DaoContainer;
@@ -23,6 +24,8 @@ public class FailedTestsLayout extends GridLayout {
     private TestResultsFilterLayout testResultsFilterLayout;
     private Button updateButton;
     private DaoContainer daoContainer;
+    public static final Logger LOG = Logger.getLogger(FailedTestsLayout.class);
+
 
     public FailedTestsLayout() {
         super(1, 3);
@@ -75,7 +78,10 @@ public class FailedTestsLayout extends GridLayout {
                         lastSuccessTest = daoContainer.getTestExecutionDao().getLastPassed(issue);
 
                     }
-                    catch (EmptyResultDataAccessException e){}
+                    catch (EmptyResultDataAccessException e){
+                        lastSuccessTest = new TestExecution();
+                    }
+                    try {
                     table.addItem(new Object[]{
                             i,
                             issue,
@@ -85,6 +91,10 @@ public class FailedTestsLayout extends GridLayout {
                             lastSuccessTest.getProject() + "." + lastSuccessTest.getVersion() + "." + lastSuccessTest.getBuild() + "." + lastSuccessTest.getExecution()
                     }, new Integer(i));
                     i++;
+                    }
+                    catch (NullPointerException e) {
+                        LOG.error("Failed load test execution " + issue + "\n" + e.getMessage());
+                    }
                 }
             }
             testResultsFilterLayout.getFilter().setStatus(null);

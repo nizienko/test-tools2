@@ -50,6 +50,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
             public void valueChange(Property.ValueChangeEvent event) {
                 filter.setProject((String) event.getProperty().getValue());
                 updateVersionSelect();
+                updateExecutionSelect();
             }
         });
         updateProjectSelect();
@@ -64,6 +65,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
             public void valueChange(Property.ValueChangeEvent event) {
                 filter.setVersion((String) event.getProperty().getValue());
                 updateBuildSelect();
+                updateExecutionSelect();
             }
         });
         this.addComponent(versionSelect);
@@ -94,6 +96,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         issueTextField = new TextField("Issue");
         issueTextField.setWidth(WIDTH);
         this.addComponent(issueTextField);
+        updateExecutionSelect();
     }
 
     private void updateProjectSelect(){
