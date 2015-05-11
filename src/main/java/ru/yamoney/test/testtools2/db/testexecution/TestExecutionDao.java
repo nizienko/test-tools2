@@ -1,7 +1,9 @@
 package ru.yamoney.test.testtools2.db.testexecution;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
+import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
 
@@ -28,6 +30,13 @@ public class TestExecutionDao {
         });
     }
 
+    public TestExecution get(int id){
+        String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
+                "  FROM execution where id=?;\n";
+        return jdbcTemplate.queryForObject(SQL, new Object[] { id },
+                new TestExecutionMapper());
+    }
+
     public List<TestExecution> getAll() {
         String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
                 "  FROM execution;\n";
@@ -38,6 +47,20 @@ public class TestExecutionDao {
         String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
                 "  FROM execution where data->>'publicated' = '0';\n";
         return jdbcTemplate.query(SQL, new TestExecutionMapper());
+    }
+
+    @Transactional
+    public void setPublished(TestExecution te){
+        TestExecution te2 = get(te.getId());
+        te2.setPublicated(1);
+        updateTestExecution(te2);
+    }
+
+    @Transactional
+    public void setFailedReason(TestExecution te, String status) {
+        TestExecution te2 = get(te.getId());
+        te2.setFailReason(status);
+        updateTestExecution(te2);
     }
 
     public void updateTestExecution(TestExecution te) {

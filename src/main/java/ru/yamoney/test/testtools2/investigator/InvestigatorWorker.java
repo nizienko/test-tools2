@@ -42,9 +42,7 @@ public class InvestigatorWorker {
 
         for (TestExecution te: daoContainer.getTestExecutionDao().getByFilter(filter)) {
             LOG.info("Investigating " + te.getName());
-            te.setFailReason(ReasonStatus.UNKNOWN.name());
-            daoContainer.getTestExecutionDao().updateTestExecution(te);
-            LOG.info(te.getName() + " stored status:" + te.getFailReason());
+            daoContainer.getTestExecutionDao().setFailedReason(te, ReasonStatus.UNKNOWN.name());
         }
     }
 }

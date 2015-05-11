@@ -18,8 +18,7 @@ public class PublisherWorker {
     public void work() {
         for (TestExecution te: daoContainer.getTestExecutionDao().getNotPublished()) {
             LOG.info(te.getName());
-            te.setPublicated(1);
-            daoContainer.getTestExecutionDao().updateTestExecution(te);
+            daoContainer.getTestExecutionDao().setPublished(te);
         }
     }
 }
