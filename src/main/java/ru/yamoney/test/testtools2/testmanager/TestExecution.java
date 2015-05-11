@@ -25,6 +25,9 @@ public class TestExecution {
     private String failReason;
     public static final Logger LOG = Logger.getLogger(TestExecution.class);
 
+    public String toString(){
+        return name;
+    }
 
     public JSONObject getJSON(){
         JSONObject jsonObject = new JSONObject();

@@ -1,8 +1,10 @@
 package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Item;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.springframework.transaction.annotation.Transactional;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
@@ -62,10 +64,12 @@ public class TestResultsLayout extends GridLayout {
         table.addContainerProperty("", Integer.class, null);
         table.addContainerProperty("Component", String.class, null);
         table.addContainerProperty("Issue", String.class, null);
-        table.addContainerProperty("Name", String.class, null);
+        table.addContainerProperty("Name", TestExecution.class, null);
         table.addContainerProperty("Comment", String.class, null);
         table.addContainerProperty("Date", Date.class, null);
         table.addContainerProperty("Status", String.class, null);
+        table.addContainerProperty("Reason", String.class, null);
+
         table.setCellStyleGenerator(new Table.CellStyleGenerator() {
             @Override
             public String getStyle(Table source, Object itemId, Object propertyId) {
@@ -87,6 +91,14 @@ public class TestResultsLayout extends GridLayout {
             }
         });
         this.addComponent(table);
+
+        table.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            public void itemClick(ItemClickEvent event) {
+                TestExecution te = (TestExecution) event.getItem().getItemProperty("Name").getValue();
+                editExecution(te);
+            }
+        });
     }
 
     private void update(){
@@ -104,13 +116,40 @@ public class TestResultsLayout extends GridLayout {
                     i,
                     te.getProject(),
                     te.getIssue(),
-                    te.getName(),
+                    te,
                     te.getComment(),
                     te.getExecutionDt(),
-                    status
+                    status,
+                    te.getFailReason()
             }, new Integer(i));
             i++;
         }
+    }
+
+    @Transactional
+    private void editExecution(TestExecution te1) {
+        TestExecution te = daoContainer.getTestExecutionDao().get(te1.getId());
+        Window editWindow = new Window(te.toString());
+        editWindow.setWidth("700px");
+        editWindow.setHeight("600px");
+        VerticalLayout layout = new VerticalLayout();
+
+        TextField nameTextField = new TextField("Name");
+        nameTextField.setValue(te.getName());
+        layout.addComponent(nameTextField);
+
+        TextField issueTextField = new TextField("Issue");
+        issueTextField.setValue(te.getIssue());
+        layout.addComponent(issueTextField);
+
+        TextField commentTextField = new TextField("Comment");
+        commentTextField.setValue(te.getComment());
+        layout.addComponent(commentTextField);
+
+        editWindow.center();
+        editWindow.setContent(layout);
+        UI.getCurrent().addWindow(editWindow);
+
     }
 
     private void export(){
