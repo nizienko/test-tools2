@@ -57,11 +57,27 @@ public class TestExecutionDao {
     }
 
     @Transactional
-    public void setFailedReason(TestExecution te, String status) {
-        TestExecution te2 = get(te.getId());
-        te2.setFailReason(status);
-        updateTestExecution(te2);
+    public void setFailedReason(int id, String status) {
+        TestExecution te = get(id);
+        te.setFailReason(status);
+        updateTestExecution(te);
     }
+
+    @Transactional
+    public void setComment(int id, String comment) {
+        TestExecution te = get(id);
+        te.setComment(comment);
+        updateTestExecution(te);
+    }
+
+
+    @Transactional
+    public void setReasonComment(int id, String comment) {
+        TestExecution te = get(id);
+        te.setReasonComment(comment);
+        updateTestExecution(te);
+    }
+
 
     public void updateTestExecution(TestExecution te) {
         String SQL = "UPDATE execution\n" +
@@ -79,6 +95,7 @@ public class TestExecutionDao {
         sqlText.append(filter.getSql());
         sqlText.append(" order by execution_dt desc limit 10000;");
         String SQL = sqlText.toString();
+        System.out.println(SQL);
         return jdbcTemplate.query(SQL, filter.getObjects(), new TestExecutionMapper());
     }
 

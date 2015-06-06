@@ -42,7 +42,8 @@ public class InvestigatorWorker {
 
         for (TestExecution te: daoContainer.getTestExecutionDao().getByFilter(filter)) {
             LOG.info("Investigating " + te.getName());
-            daoContainer.getTestExecutionDao().setFailedReason(te, ReasonStatus.UNKNOWN.name());
+            daoContainer.getTestExecutionDao().setFailedReason(te.getId(), ReasonStatus.UNKNOWN.name());
+            daoContainer.getTestExecutionDao().setReasonComment(te.getId(), "by default");
         }
     }
 }

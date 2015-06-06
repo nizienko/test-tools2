@@ -23,6 +23,8 @@ public class TestExecution {
     private String comment;
     private Integer publicated;
     private String failReason;
+    private String reasonComment;
+    private Integer acceptance;
     public static final Logger LOG = Logger.getLogger(TestExecution.class);
 
     public String toString(){
@@ -43,6 +45,12 @@ public class TestExecution {
             jsonObject.put("publicated", publicated + "");
             if (failReason != null) {
                 jsonObject.put("reason", failReason);
+            }
+            if (reasonComment != null) {
+                jsonObject.put("reasonComment", reasonComment);
+            }
+            if (acceptance != null) {
+                jsonObject.put("acceptance", acceptance + "");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,6 +80,18 @@ public class TestExecution {
             }
             catch (Exception e) {
                 failReason = null;
+            }
+            try {
+                reasonComment = (String) jsonObject.get("reasonComment");
+            }
+            catch (Exception e) {
+                reasonComment = null;
+            }
+            try {
+                acceptance = Integer.parseInt((String) jsonObject.get("acceptance"));
+            }
+            catch (Exception e) {
+                acceptance = null;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -181,5 +201,21 @@ public class TestExecution {
 
     public void setFailReason(String failReason) {
         this.failReason = failReason;
+    }
+
+    public String getReasonComment() {
+        return reasonComment;
+    }
+
+    public void setReasonComment(String reasonComment) {
+        this.reasonComment = reasonComment;
+    }
+
+    public Integer getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(Integer acceptance) {
+        this.acceptance = acceptance;
     }
 }

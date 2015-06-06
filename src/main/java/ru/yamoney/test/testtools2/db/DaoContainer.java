@@ -1,6 +1,7 @@
 package ru.yamoney.test.testtools2.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.yamoney.test.testtools2.db.testand.TestStandDao;
 import ru.yamoney.test.testtools2.db.testexecution.TestExecutionDao;
 import ru.yamoney.test.testtools2.db.testsettings.TestSettingDao;
 
@@ -10,11 +11,13 @@ import ru.yamoney.test.testtools2.db.testsettings.TestSettingDao;
 public class DaoContainer {
     private TestExecutionDao testExecutionDao;
     private TestSettingDao testSettingDao;
+    private TestStandDao testStandDao;
 
     public DaoContainer(JdbcTemplate jdbcTemplate) {
 
         testExecutionDao = new TestExecutionDao(jdbcTemplate);
         testSettingDao = new TestSettingDao(jdbcTemplate);
+        testStandDao = new TestStandDao(jdbcTemplate);
     }
 
     public TestExecutionDao getTestExecutionDao() {
@@ -23,5 +26,9 @@ public class DaoContainer {
 
     public TestSettingDao getTestSettingDao() {
         return testSettingDao;
+    }
+
+    public TestStandDao getTestStandDao() {
+        return testStandDao;
     }
 }

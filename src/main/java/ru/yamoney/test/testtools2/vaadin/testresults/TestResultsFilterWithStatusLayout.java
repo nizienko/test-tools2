@@ -1,6 +1,8 @@
 package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Property;
+import com.vaadin.server.ClientConnector;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ListSelect;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
@@ -12,6 +14,7 @@ import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 public class TestResultsFilterWithStatusLayout extends TestResultsFilterLayout {
     private ListSelect statusSelect;
     private ListSelect reasonSelect;
+    private CheckBox acceptanceOnlyCheckBox;
 
     public TestResultsFilterWithStatusLayout(DaoContainer daoContainer) {
         super(daoContainer);
@@ -71,7 +74,19 @@ public class TestResultsFilterWithStatusLayout extends TestResultsFilterLayout {
             }
         });
         super.addComponent(reasonSelect);
+
+        acceptanceOnlyCheckBox = new CheckBox("Acceptance only");
+        super.addComponent(acceptanceOnlyCheckBox);
     }
 
-
+    public TestResultsFilter getFilter(){
+        TestResultsFilter testResultsFilter = super.getFilter();
+        if (acceptanceOnlyCheckBox.getValue()) {
+            testResultsFilter.setAcceptance("1");
+        }
+        else {
+            testResultsFilter.setAcceptance(null);
+        }
+        return testResultsFilter;
+    }
 }

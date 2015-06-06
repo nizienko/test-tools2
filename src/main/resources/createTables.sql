@@ -79,3 +79,19 @@ CREATE INDEX execution_status_index ON
 
 CREATE INDEX execution_status_index ON
       execution ((data->>'reason'));
+
+CREATE INDEX acceptance_index ON
+      execution ((data->>'acceptance'));
+
+CREATE TABLE resources
+(
+  id integer NOT NULL DEFAULT nextval('testand_id_seq'::regclass),
+  data jsonb,
+  type text,
+  CONSTRAINT resources_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE resources
+  OWNER TO postgres;

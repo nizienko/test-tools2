@@ -30,7 +30,7 @@ public class TotalInfoLayout extends GridLayout {
         calendar.add(Calendar.HOUR, -8);
         filter.setSinceDate(calendar.getTime());
         filter.setToDate(new Date());
-        updateButton = new Button("Update");
+        updateButton = new Button("Load");
         updateButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -40,8 +40,9 @@ public class TotalInfoLayout extends GridLayout {
 
         label = new Label();
         label.setContentMode(ContentMode.HTML);
+        this.addComponent(updateButton);
         this.addComponent(label);
-        updatePage();
+//        updatePage();
     }
 
     private void updatePage(){

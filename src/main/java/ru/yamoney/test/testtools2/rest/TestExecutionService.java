@@ -40,7 +40,8 @@ public class TestExecutionService {
             @FormParam("issue") String issue,
             @FormParam("name") String name,
             @FormParam("status") String status,
-            @FormParam("comment") String comment
+            @FormParam("comment") String comment,
+            @FormParam("acceptance") String acceptance
             ){
         if ((project == null) || (project.equals(""))) {
             return Response.status(400).entity(buildJSONAnswer(-1, "project is empty")).build();
@@ -87,6 +88,15 @@ public class TestExecutionService {
         testExecution.setExecutionDt(new Date());
         testExecution.setPublicated(0);
         testExecution.setFailReason(ReasonStatus.NOT_SET.name());
+        if (acceptance != null) {
+            try {
+                int acceptanceValue = Integer.parseInt(acceptance);
+                testExecution.setAcceptance(acceptanceValue);
+            }
+            catch (NumberFormatException e) {
+                LOG.error("Acceptance value not correct int: " + acceptance);
+            }
+        }
         try {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
