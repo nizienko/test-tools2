@@ -66,7 +66,7 @@ public class TestStandLayout extends GridLayout {
                 }
             }
         });
-//        editCheckBox = new CheckBox("Edit");
+        editCheckBox = new CheckBox("Edit");
         updateButton = new Button("Update");
         updateButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class TestStandLayout extends GridLayout {
 
         HorizontalLayout buttonsLayout= new HorizontalLayout();
         buttonsLayout.addComponent(updateButton);
-        buttonsLayout.addComponent(editCheckBox);
+//        buttonsLayout.addComponent(editCheckBox);
         buttonsLayout.addComponent(reloadSettingsButton);
         this.addComponent(buttonsLayout);
         this.addComponent(table);

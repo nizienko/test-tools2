@@ -1,0 +1,8 @@
+types: "HTTP"
+       "DB_POSTGRES"
+       "SELECT"
+
+"{"url": "http://yandex.ru", "name": "yandex"}"
+"{"url": "http://127.0.0.1:9999", "name": "bad"}"
+"{"name": "Postgres", "user": "postgres", "password": "postgres", "portNumber": "5432", "serverName": "127.0.0.1", "databaseName": "testresults"}"
+"{"SQL": "select tk from testconfiguration where id=1", "name": "test select", "dataSource": "Postgres", "expectedResult": "TK21"}"
