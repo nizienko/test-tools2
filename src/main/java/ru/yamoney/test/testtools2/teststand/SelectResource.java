@@ -73,12 +73,18 @@ public class SelectResource implements Resource {
 
     private void check(){
         try {
-            String result = jdbcTemplate.queryForObject(SQL, String.class);
-            if (expectedResult.equals(result)) {
-                resourceStatus.setStatus(true, "Result: " + result);
+            if (SQL.toUpperCase().startsWith("SELECT")) {
+                SQL = SQL.toUpperCase().replace("FOR UPDATE", "");
+                String result = jdbcTemplate.queryForObject(SQL, String.class);
+                if (expectedResult.equals(result)) {
+                    resourceStatus.setStatus(true, "Result: " + result);
+                }
+                else {
+                    resourceStatus.setStatus(false, "Result: " + result + ", expected: " + expectedResult);
+                }
             }
             else {
-                resourceStatus.setStatus(false, "Result: " + result + ", expected: " + expectedResult);
+                resourceStatus.setStatus(false, "bad select " + SQL);
             }
         }
         catch (Exception e) {
