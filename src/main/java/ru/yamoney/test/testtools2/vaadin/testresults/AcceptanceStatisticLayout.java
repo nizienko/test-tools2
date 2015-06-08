@@ -4,13 +4,11 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import javafx.animation.Animation;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.db.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
-import ru.yamoney.test.testtools2.testmanager.TestExecution;
-import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
+
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

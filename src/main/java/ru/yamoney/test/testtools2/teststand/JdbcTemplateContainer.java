@@ -1,5 +1,6 @@
 package ru.yamoney.test.testtools2.teststand;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +24,27 @@ public class JdbcTemplateContainer {
     }
 
     public void addOracleDataSource(String data) {
-
+        try {
+            JSONObject dataJSON = new JSONObject(data);
+            BasicDataSource source = new BasicDataSource();
+            source.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+            String url = "jdbc:oracle:thin:@" + dataJSON.get("serverName") + ":" + dataJSON.get("portNumber") +
+                    "/" + dataJSON.get("serviceName");
+            LOG.info(url);
+            source.setUrl(url);
+            source.setUsername((String) dataJSON.get("user"));
+            source.setPassword((String) dataJSON.get("password"));
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(source);
+            String name = (String) dataJSON.get("serverName");
+            try {
+                name = (String) dataJSON.get("name");
+            } catch (JSONException e) {
+                LOG.error(e.getMessage());
+            }
+            jdbcTemplates.put(name, jdbcTemplate);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
     }
 
     public void addPostgresDataSource(String data) {

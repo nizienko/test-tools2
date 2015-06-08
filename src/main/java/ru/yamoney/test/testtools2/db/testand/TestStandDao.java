@@ -17,7 +17,7 @@ public class TestStandDao {
 
     public List<ResourceEntity> getResources() {
         String SQL = "SELECT id, data, type\n" +
-                "  FROM resources where type not in ('DB_ORACLE', 'DB_POSTGRES');\n";
+                "  FROM resources where type not in ('DB_ORACLE', 'DB_POSTGRES') order by data->>'name';\n";
         return jdbcTemplate.query(SQL, new ResourcesMapper());
     }
 

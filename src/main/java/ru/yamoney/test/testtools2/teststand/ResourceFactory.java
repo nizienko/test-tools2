@@ -11,6 +11,9 @@ public class ResourceFactory {
         else if (type.equals(ResourceType.SELECT.name())){
             return new SelectResource();
         }
+        else if (type.equals(ResourceType.CALYPSO_HTTP.name())){
+            return new CalypsoHttpResource();
+        }
         else return null;
     }
 }

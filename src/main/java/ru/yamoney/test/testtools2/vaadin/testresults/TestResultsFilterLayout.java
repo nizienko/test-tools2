@@ -85,7 +85,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
 
         executionSelect = new ListSelect("Execution");
         executionSelect.setRows(1);
-        executionSelect.setWidth(WIDTH);
+        executionSelect.setWidth("150");
         executionSelect.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {

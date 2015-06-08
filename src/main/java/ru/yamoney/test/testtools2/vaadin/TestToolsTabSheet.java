@@ -19,6 +19,6 @@ public class TestToolsTabSheet extends TabSheet {
         this.addTab(new AcceptanceStatisticLayout(), "Acceptance statistic");
         this.addTab(new TestStandLayout(), "Test stand");
         this.addTab(new TestSettingsLayout(), "Settings manager");
-        this.addTab(new ManageLayout(), "Manage");
+//        this.addTab(new ManageLayout(), "Manage");
     }
 }
