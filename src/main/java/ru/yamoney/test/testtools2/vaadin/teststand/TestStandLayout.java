@@ -86,11 +86,10 @@ public class TestStandLayout extends GridLayout {
 
         HorizontalLayout buttonsLayout= new HorizontalLayout();
         buttonsLayout.addComponent(updateButton);
-//        buttonsLayout.addComponent(editCheckBox);
         buttonsLayout.addComponent(reloadSettingsButton);
         this.addComponent(buttonsLayout);
         this.addComponent(table);
-
+        update();
     }
 
     private void update(){
