@@ -19,6 +19,11 @@ public class TestStand {
 
     public TestStand(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
+        loadDataSources();
+        resources = null;
+    }
+
+    public void loadDataSources(){
         jdbcTemplateContainer = new JdbcTemplateContainer(daoContainer);
         for (ResourceEntity resourceEntity: this.daoContainer.getTestStandDao().getDataSources()) {
             LOG.info(resourceEntity.getType());
@@ -29,8 +34,6 @@ public class TestStand {
                 jdbcTemplateContainer.addPostgresDataSource(resourceEntity.getData());
             }
         }
-        resources = null;
-
     }
 
     public List<Resource> getResources(){
@@ -39,6 +42,8 @@ public class TestStand {
         }
         return resources;
     }
+
+
 
     public void loadResources(){
         ResourceFactory resourceFactory = new ResourceFactory();

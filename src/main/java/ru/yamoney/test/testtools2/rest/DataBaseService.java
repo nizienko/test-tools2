@@ -25,9 +25,9 @@ public class DataBaseService {
     public Response getSettings(
             @PathParam("dataSource") String dataSource,
             @QueryParam(value = "sql")
-            String sql
+            String SQL
     ){
-        LOG.info("sql=" + sql);
+        LOG.info("sql=" + SQL);
         TestStand testStand = (TestStand) Application.getCtx().getBean("testStand");
         JdbcTemplate jdbcTemplate = testStand.getJdbcTemplateContainer().getJdbcTemplates().get(dataSource);
         if (jdbcTemplate == null) {
@@ -38,9 +38,8 @@ public class DataBaseService {
         JSONObject jsonObject = new JSONObject();
         int i = 1;
         try {
-            if (sql.toUpperCase().startsWith("SELECT")) {
-                sql = sql.toUpperCase().replace("FOR UPDATE", "");
-                List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+            if (SQL.toUpperCase().startsWith("SELECT") && !(SQL.replaceAll(";", "").toUpperCase().endsWith("FOR UPDATE"))) {
+                List<Map<String, Object>> result = jdbcTemplate.queryForList(SQL);
                 for (Map<String, Object> str: result) {
                     JSONObject strObject = new JSONObject();
                     for (Map.Entry<String, Object> entry : str.entrySet())

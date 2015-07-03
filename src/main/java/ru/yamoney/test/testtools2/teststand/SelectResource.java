@@ -16,6 +16,8 @@ public class SelectResource implements Resource {
     private JdbcTemplate jdbcTemplate;
     private String SQL;
     private String expectedResult;
+    private String data;
+    private TestStand testStand;
 
     @Override
     public String toString(){
@@ -25,8 +27,9 @@ public class SelectResource implements Resource {
     @Override
     public void init(String data) {
         try {
+            this.data = data;
             dataJSON = new JSONObject(data);
-            TestStand testStand = (TestStand) Application.getCtx().getBean("testStand");
+            testStand = (TestStand) Application.getCtx().getBean("testStand");
             jdbcTemplate = testStand.getJdbcTemplateContainer().getJdbcTemplates().get(dataJSON.get("dataSource"));
             if (jdbcTemplate == null) {
                 throw new IllegalStateException("No such dataSource");
@@ -66,15 +69,14 @@ public class SelectResource implements Resource {
     @Override
     public ResourceStatus getStatus() {
         if (resourceStatus.isDataToOld()) {
-            check();
+            check(true);
         }
         return resourceStatus;
     }
 
-    private void check(){
+    private void check(boolean first){
         try {
-            if (SQL.toUpperCase().startsWith("SELECT")) {
-                SQL = SQL.toUpperCase().replace("FOR UPDATE", "");
+            if (SQL.toUpperCase().startsWith("SELECT") && !(SQL.replaceAll(";", "").toUpperCase().endsWith("FOR UPDATE"))) {
                 String result = jdbcTemplate.queryForObject(SQL, String.class);
                 if (expectedResult.equals(result)) {
                     resourceStatus.setStatus(true, "Result: " + result);
@@ -88,7 +90,16 @@ public class SelectResource implements Resource {
             }
         }
         catch (Exception e) {
-            resourceStatus.setStatus(false, e.getMessage());
+            LOG.error(e.getMessage());
+            if ((first) && (e.getMessage().contains("data to read from socket"))) {
+                LOG.info("Going to try second time...");
+                testStand.loadDataSources();
+                this.init(data);
+                check(false);
+            }
+            else {
+                resourceStatus.setStatus(false, e.getMessage());
+            }
         }
     }
 }
