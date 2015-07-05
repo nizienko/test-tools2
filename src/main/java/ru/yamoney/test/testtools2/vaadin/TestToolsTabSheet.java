@@ -4,6 +4,7 @@ import com.vaadin.ui.TabSheet;
 import ru.yamoney.test.testtools2.vaadin.testresults.*;
 import ru.yamoney.test.testtools2.vaadin.manage.ManageLayout;
 import ru.yamoney.test.testtools2.vaadin.testsettings.TestSettingsLayout;
+import ru.yamoney.test.testtools2.vaadin.teststand.ServicesLayout;
 import ru.yamoney.test.testtools2.vaadin.teststand.TestStandLayout;
 
 /**
@@ -13,6 +14,7 @@ public class TestToolsTabSheet extends TabSheet {
     public TestToolsTabSheet(){
         this.setSizeFull();
         this.addTab(new TestStandLayout(), "Test stand");
+        this.addTab(new ServicesLayout(), "Services");
         this.addTab(new TotalInfoLayout(), "8 hours summary");
         this.addTab(new TestResultsLayout(), "Results");
         this.addTab(new FailedTestsLayout(), "Failed tests");

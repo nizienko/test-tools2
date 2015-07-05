@@ -1,10 +1,11 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.teststand.resources;
 
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yamoney.test.testtools2.common.Application;
+import ru.yamoney.test.testtools2.teststand.TestStand;
 
 /**
  * Created by def on 06.06.15.

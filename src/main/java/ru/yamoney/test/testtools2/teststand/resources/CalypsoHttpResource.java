@@ -1,23 +1,22 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.teststand.resources;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import ru.yamoney.test.testtools2.common.Application;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Created by def on 27.05.15.
+ * Created by nizienko on 08.06.15.
  */
-public class HttpResource implements Resource{
-    public static final Logger LOG = Logger.getLogger(HttpResource.class);
-
-    private CloseableHttpClient httpClient = CloseableHttpClientFactory.getInstance().createHttpClient();
+public class CalypsoHttpResource implements Resource {
+    public static final Logger LOG = Logger.getLogger(CalypsoHttpResource.class);
     private String url;
     private ResourceStatus resourceStatus;
     private JSONObject dataJSON;
@@ -77,7 +76,7 @@ public class HttpResource implements Resource{
             httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
         }
         try {
-            HttpResponse response = httpClient.execute(httpget);
+            HttpResponse response = Application.getHttpClient().execute(httpget);
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 StringBuffer responseBody = new StringBuffer();
@@ -85,7 +84,7 @@ public class HttpResource implements Resource{
                 while ((line = rd.readLine()) != null) {
                     responseBody.append(line + "\r\n");
                 }
-                responseString = responseBody.toString();
+                responseString = Jsoup.parse(responseBody.toString()).getElementsByTag("response").first().attr("serverVersion");
                 responseStatus = response.getStatusLine().getStatusCode();
             }
             finally {
@@ -101,7 +100,7 @@ public class HttpResource implements Resource{
             httpget.releaseConnection();
         }
         if (responseStatus == 200) {
-            resourceStatus.setStatus(true, "Response status: " + responseStatus);
+            resourceStatus.setStatus(true, responseString);
         }
     }
 }

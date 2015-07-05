@@ -1,5 +1,6 @@
 package ru.yamoney.test.testtools2.common;
 
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,8 +15,10 @@ public class Application {
     public static final Logger LOG = Logger.getLogger(Application.class);
     private static List<ApplicationThread> apps;
     private static boolean embeddedServerMode = false;
+    private static final CloseableHttpClient httpClient = CloseableHttpClientFactory.getInstance().createHttpClient();
 
     private static ApplicationContext ctx = null;
+
     public static void main(String[] args) {
         embeddedServerMode = true;
         getCtx();
@@ -46,6 +49,10 @@ public class Application {
             ctx = new ClassPathXmlApplicationContext("beans.xml");
         }
         return ctx;
+    }
+
+    public static CloseableHttpClient getHttpClient(){
+        return httpClient;
     }
 
     public static boolean isEmbeddedServerMode() {

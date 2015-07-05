@@ -1,4 +1,4 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.teststand.resources;
 
 import java.util.Date;
 

@@ -95,3 +95,15 @@ WITH (
 );
 ALTER TABLE resources
   OWNER TO postgres;
+
+
+CREATE SEQUENCE services_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE services_id_seq
+  OWNER TO postgres;
+
+  

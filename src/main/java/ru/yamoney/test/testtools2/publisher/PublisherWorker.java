@@ -1,7 +1,7 @@
 package ru.yamoney.test.testtools2.publisher;
 
 import org.apache.log4j.Logger;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
 /**

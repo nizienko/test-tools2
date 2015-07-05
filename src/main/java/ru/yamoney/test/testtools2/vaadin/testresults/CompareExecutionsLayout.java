@@ -4,11 +4,9 @@ import com.vaadin.data.Item;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Table;
-import org.springframework.dao.EmptyResultDataAccessException;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
-import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
 import java.util.*;
 

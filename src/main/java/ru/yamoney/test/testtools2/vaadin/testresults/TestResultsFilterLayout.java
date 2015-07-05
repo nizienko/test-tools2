@@ -3,9 +3,8 @@ package ru.yamoney.test.testtools2.vaadin.testresults;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 

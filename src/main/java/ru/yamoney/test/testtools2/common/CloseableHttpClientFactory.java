@@ -1,4 +1,4 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.common;
 
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;

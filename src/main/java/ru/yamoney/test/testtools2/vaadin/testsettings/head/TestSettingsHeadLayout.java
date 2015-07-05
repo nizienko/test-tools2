@@ -8,7 +8,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import org.springframework.jdbc.UncategorizedSQLException;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestConfiguration;
 import ru.yamoney.test.testtools2.vaadin.testsettings.body.AddNewParameterWindow;
 import ru.yamoney.test.testtools2.vaadin.testsettings.body.AddNewTestConfigurationWindow;

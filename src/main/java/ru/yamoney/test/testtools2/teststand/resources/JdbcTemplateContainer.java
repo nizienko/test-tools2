@@ -1,4 +1,4 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.teststand.resources;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 
 import java.util.HashMap;
 import java.util.Map;

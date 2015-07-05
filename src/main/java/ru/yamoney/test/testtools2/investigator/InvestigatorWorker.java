@@ -1,8 +1,7 @@
 package ru.yamoney.test.testtools2.investigator;
 
 import org.apache.log4j.Logger;
-import org.omg.PortableInterceptor.LOCATION_FORWARD;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;

@@ -1,9 +1,7 @@
-package ru.yamoney.test.testtools2.db.testand;
+package ru.yamoney.test.testtools2.teststand.resources.db;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.yamoney.test.testtools2.testmanager.TestExecution;
-import ru.yamoney.test.testtools2.teststand.Resource;
-import ru.yamoney.test.testtools2.teststand.ResourceEntity;
+import ru.yamoney.test.testtools2.teststand.resources.ResourceEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

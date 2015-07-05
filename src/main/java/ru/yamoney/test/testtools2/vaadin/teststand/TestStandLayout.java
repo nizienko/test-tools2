@@ -5,7 +5,7 @@ import com.vaadin.data.Item;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.*;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.teststand.Resource;
+import ru.yamoney.test.testtools2.teststand.resources.Resource;
 import ru.yamoney.test.testtools2.teststand.TestStand;
 
 import java.util.Date;

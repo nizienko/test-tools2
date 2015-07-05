@@ -5,7 +5,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public class TotalInfoLayout extends GridLayout {
     private DaoContainer daoContainer;
     private Button updateButton;
     private TestResultsFilter filter;
-
+    private Calendar calendar;
 
     public TotalInfoLayout() {
         super(1, 3);
@@ -26,7 +26,7 @@ public class TotalInfoLayout extends GridLayout {
         this.setSizeFull();
         daoContainer = (DaoContainer) Application.getCtx().getBean("daoContainer");
         filter = new TestResultsFilter();
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, -8);
         filter.setSinceDate(calendar.getTime());
         filter.setToDate(new Date());
@@ -47,6 +47,10 @@ public class TotalInfoLayout extends GridLayout {
 
     private void updatePage(){
         StringBuffer text = new StringBuffer();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.HOUR, -8);
+        filter.setSinceDate(calendar.getTime());
+        filter.setToDate(new Date());
         for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectProjects(filter)) {
             String project = (String) p.get("project");
             text.append("<h2>" + project + "</h2>");

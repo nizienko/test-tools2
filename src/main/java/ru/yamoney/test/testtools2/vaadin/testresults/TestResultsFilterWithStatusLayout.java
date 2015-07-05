@@ -1,10 +1,9 @@
 package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Property;
-import com.vaadin.server.ClientConnector;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ListSelect;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 

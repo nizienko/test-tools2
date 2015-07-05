@@ -6,7 +6,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestConfiguration;
 import ru.yamoney.test.testtools2.testmanager.TestSetting;
 

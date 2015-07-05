@@ -1,4 +1,4 @@
-package ru.yamoney.test.testtools2.teststand;
+package ru.yamoney.test.testtools2.teststand.resources;
 
 /**
  * Created by def on 06.06.15.

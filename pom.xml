@@ -141,6 +141,11 @@
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>8.1.9.v20130131</version>
+        </dependency>
 
     </dependencies>
 </project>

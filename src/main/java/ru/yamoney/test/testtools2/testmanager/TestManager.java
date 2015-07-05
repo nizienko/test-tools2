@@ -1,6 +1,6 @@
 package ru.yamoney.test.testtools2.testmanager;
 
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 
 import java.util.ArrayList;
 import java.util.List;

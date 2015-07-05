@@ -6,12 +6,10 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.transaction.annotation.Transactional;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
-import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 import static ru.yamoney.test.testtools2.testmanager.ExecutionStatus.*;

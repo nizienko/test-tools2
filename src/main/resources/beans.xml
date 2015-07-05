@@ -27,7 +27,7 @@
         <property name="dataSource" ref="datasource"/>
     </bean>
 
-    <bean id="daoContainer" class="ru.yamoney.test.testtools2.db.DaoContainer">
+    <bean id="daoContainer" class="ru.yamoney.test.testtools2.common.DaoContainer">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 

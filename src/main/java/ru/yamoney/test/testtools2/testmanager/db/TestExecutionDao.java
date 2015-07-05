@@ -1,9 +1,8 @@
-package ru.yamoney.test.testtools2.db.testexecution;
+package ru.yamoney.test.testtools2.testmanager.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
-import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
 

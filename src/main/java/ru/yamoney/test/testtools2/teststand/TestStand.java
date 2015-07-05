@@ -1,10 +1,10 @@
 package ru.yamoney.test.testtools2.teststand;
 
 import org.apache.log4j.Logger;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
+import ru.yamoney.test.testtools2.teststand.resources.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

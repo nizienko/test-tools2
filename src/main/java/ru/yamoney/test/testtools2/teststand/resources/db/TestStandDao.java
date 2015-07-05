@@ -1,7 +1,7 @@
-package ru.yamoney.test.testtools2.db.testand;
+package ru.yamoney.test.testtools2.teststand.resources.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.yamoney.test.testtools2.teststand.ResourceEntity;
+import ru.yamoney.test.testtools2.teststand.resources.ResourceEntity;
 
 import java.util.List;
 

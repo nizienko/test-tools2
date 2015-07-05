@@ -6,7 +6,7 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.db.DaoContainer;
+import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.TestParameter;
 
 /**
