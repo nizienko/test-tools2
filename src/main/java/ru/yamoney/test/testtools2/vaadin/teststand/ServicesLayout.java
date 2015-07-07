@@ -4,14 +4,13 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.teststand.services.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by def on 05.07.15.
@@ -21,7 +20,7 @@ public class ServicesLayout extends VerticalLayout {
 
     public ServicesLayout(){
         this.setSizeFull();
-
+        this.setSpacing(false);
         DaoContainer daoContainer = (DaoContainer) Application.getCtx().getBean("daoContainer");
         services = daoContainer.getServiceDao().getServices();
 
@@ -67,12 +66,29 @@ public class ServicesLayout extends VerticalLayout {
                     }
                     service.setEditableParams(newParams);
                     String result = service.sendRequest();
-                    resultLabel.setValue(result);
-                    Notification.show(result, Notification.Type.TRAY_NOTIFICATION);
+                    resultLabel.setValue(createAnswer(result));
                 }
             });
             content.addComponent(button);
 
+        }
+        private String createAnswer(String result){
+            try {
+                StringBuffer answer = new StringBuffer();
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject != null) {
+                    Iterator<String> keys = jsonObject.keys();
+                    while(keys.hasNext()){
+                        String key = keys.next();
+                        String val = null;
+                        val = jsonObject.getString(key);
+                        answer.append(key + ": " + val + "<br>");
+                    }
+                }
+                return answer.toString();
+            } catch (JSONException e) {
+                return result;
+            }
         }
     }
 

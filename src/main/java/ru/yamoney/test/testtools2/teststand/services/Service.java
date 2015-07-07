@@ -43,21 +43,25 @@ public class Service {
             action = jsonObject.getString("action");
             name = jsonObject.getString("name");
             JSONObject hiddenJSONParams = jsonObject.getJSONObject("hiddenParams");
-            Iterator<String> keys = hiddenJSONParams.keys();
-            while(keys.hasNext()){
-                String key = keys.next();
-                String val = null;
-                val = hiddenJSONParams.getString(key);
-                hiddenParams.add(new BasicNameValuePair(key, val));
+            if (hiddenJSONParams != null) {
+                Iterator<String> keys = hiddenJSONParams.keys();
+                while(keys.hasNext()){
+                    String key = keys.next();
+                    String val = null;
+                    val = hiddenJSONParams.getString(key);
+                    hiddenParams.add(new BasicNameValuePair(key, val));
+                }
             }
 
             JSONObject editableJSONParams = jsonObject.getJSONObject("editableParams");
-            keys = editableJSONParams.keys();
-            while(keys.hasNext()){
-                String key = keys.next();
-                String val = null;
-                val = editableJSONParams.getString(key);
-                editableParams.add(new BasicNameValuePair(key, val));
+            if (editableJSONParams != null) {
+                Iterator<String> keys = editableJSONParams.keys();
+                while(keys.hasNext()){
+                    String key = keys.next();
+                    String val = null;
+                    val = editableJSONParams.getString(key);
+                    editableParams.add(new BasicNameValuePair(key, val));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -68,6 +72,7 @@ public class Service {
         List<NameValuePair> all = new ArrayList<>();
         all.addAll(editableParams);
         all.addAll(hiddenParams);
+        LOG.info("request params: " + all);
         return all;
     }
 
@@ -99,7 +104,7 @@ public class Service {
                 String line;
                 while ((line = rd.readLine()) != null) {
                     LOG.info(line);
-                    responseBody.append(line + "<br>");
+                    responseBody.append(line);
                 }
                 responseString = responseBody.toString();
             }
