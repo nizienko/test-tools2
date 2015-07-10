@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -88,11 +89,8 @@ public class Service {
         HttpPost httpPost = new HttpPost(action);
         LOG.info("Request to " + action);
         httpPost.setHeader("Content-Type", "text/html; charset=UTF-8");
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(getAllParams()));
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
+        httpPost.setEntity(new UrlEncodedFormEntity(getAllParams(), Charset.forName("UTF-8")));
+
         String responseString = "";
         HttpResponse response = null;
         try {
