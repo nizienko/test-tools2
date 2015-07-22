@@ -34,8 +34,9 @@ public class Service {
     private List<NameValuePair> editableParams;
     private String action;
     private String name;
+    private int id;
 
-    public Service(String data){
+    public Service(int id, String data){
         hiddenParams = new ArrayList<NameValuePair>();
         editableParams = new ArrayList<NameValuePair>();
         JSONObject jsonObject;

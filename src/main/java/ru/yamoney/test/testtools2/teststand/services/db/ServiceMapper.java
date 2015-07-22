@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class ServiceMapper  implements RowMapper<Service> {
     @Override
     public Service mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Service service = new Service(rs.getString("data"));
+        Service service = new Service(rs.getInt("id"), rs.getString("data"));
         return service;
     }
 }
