@@ -13,10 +13,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Created by nizienko on 08.06.15.
+ * Created by nizienko on 18.08.15.
  */
-public class CalypsoHttpResource implements Resource {
-    public static final Logger LOG = Logger.getLogger(CalypsoHttpResource.class);
+public class PingHttpResource implements Resource {
+    public static final Logger LOG = Logger.getLogger(PingHttpResource.class);
     private String url;
     private ResourceStatus resourceStatus;
     private JSONObject dataJSON;
@@ -58,9 +58,11 @@ public class CalypsoHttpResource implements Resource {
         return resourceStatus;
     }
 
-    private void check(){
+    private void check() {
         LOG.info("Checking....");
-        String responseString = null;
+        String version = null;
+        String status = null;
+        String statusMessage = null;
         int responseStatus = -1;
         HttpGet httpget = new HttpGet(url);
         try {
@@ -76,6 +78,7 @@ public class CalypsoHttpResource implements Resource {
             httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
         }
         try {
+            JSONObject root;
             HttpResponse response = Application.getHttpClient().execute(httpget);
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -84,12 +87,17 @@ public class CalypsoHttpResource implements Resource {
                 while ((line = rd.readLine()) != null) {
                     responseBody.append(line + "\r\n");
                 }
-                responseString = Jsoup.parse(responseBody.toString()).getElementsByTag("response").first().attr("serverVersion");
+                root = new JSONObject(responseBody.toString());
                 responseStatus = response.getStatusLine().getStatusCode();
             }
             finally {
                 EntityUtils.consumeQuietly(response.getEntity());
             }
+            JSONObject serviceInfoJson = (JSONObject) root.get("serviceInfo");
+            version = (String) serviceInfoJson.get("version");
+            JSONObject statusJson = (JSONObject) root.get("status");
+            status = statusJson.getString("code");
+            statusMessage = statusJson.getString("message");
         }
 
         catch (Exception e) {
@@ -100,7 +108,7 @@ public class CalypsoHttpResource implements Resource {
             httpget.releaseConnection();
         }
         if (responseStatus == 200) {
-            resourceStatus.setStatus(true, responseString);
+            resourceStatus.setStatus(true, "Version: " + version + ", Status: " + status + "(" + statusMessage + ")");
         }
     }
 }

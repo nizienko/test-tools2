@@ -16,7 +16,8 @@ import javax.ws.rs.core.Response;
 public class ManageService {
 
     @GET
-    @Path("/status")    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getStatus(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", "ok");
@@ -24,7 +25,8 @@ public class ManageService {
     }
 
     @GET
-    @Path("/stop")    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/stop")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response stop(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", "stopping...");

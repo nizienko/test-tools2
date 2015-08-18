@@ -18,10 +18,10 @@ import java.util.*;
 public class ServiceMenu extends MenuBar {
     private List<Service> services;
 
-    public ServiceMenu(){
+    public ServiceMenu(String name){
         final DaoContainer daoContainer = (DaoContainer) Application.getCtx().getBean("daoContainer");
         services = daoContainer.getServiceDao().getServices();
-        MenuBar.MenuItem serviceItem = this.addItem("Test tools >", null);
+        MenuBar.MenuItem serviceItem = this.addItem(name, null);
 
         for (final Service service : services) {
             MenuBar.MenuItem currentItem = serviceItem;

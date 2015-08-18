@@ -20,8 +20,6 @@ public class ServicesLayout extends VerticalLayout {
     public ServicesLayout() {
         this.setSizeFull();
         this.setSpacing(false);
-
-        this.addComponent(new ServiceMenu());
-
+        this.addComponent(new ServiceMenu("Services"));
     }
 }

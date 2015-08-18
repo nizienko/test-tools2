@@ -27,7 +27,7 @@ public class HttpResource implements Resource{
 
     @Override
     public void init(String data) {
-        resourceStatus = new ResourceStatus(30);
+        resourceStatus = new ResourceStatus(5);
         try {
             dataJSON = new JSONObject(data);
         } catch (JSONException e) {
