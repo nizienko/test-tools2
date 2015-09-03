@@ -26,7 +26,6 @@ public class TestStand {
     public void loadDataSources(){
         jdbcTemplateContainer = new JdbcTemplateContainer(daoContainer);
         for (ResourceEntity resourceEntity: this.daoContainer.getTestStandDao().getDataSources()) {
-            LOG.info(resourceEntity.getType());
             if (resourceEntity.getType().equals(ResourceType.DB_ORACLE.name())) {
                 jdbcTemplateContainer.addOracleDataSource(resourceEntity.getData());
             }
@@ -41,6 +40,12 @@ public class TestStand {
             loadResources();
         }
         return resources;
+    }
+
+    public void checkResources() {
+        for (Resource resource : getResources()) {
+            resource.checkStatus();
+        }
     }
 
 

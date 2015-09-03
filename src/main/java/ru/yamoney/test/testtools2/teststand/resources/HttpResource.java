@@ -14,14 +14,14 @@ import java.io.InputStreamReader;
 /**
  * Created by def on 27.05.15.
  */
-public class HttpResource implements Resource{
+public class HttpResource implements Resource {
     public static final Logger LOG = Logger.getLogger(HttpResource.class);
     private String url;
     private ResourceStatus resourceStatus;
     private JSONObject dataJSON;
 
     @Override
-    public String toString(){
+    public String toString() {
         return resourceStatus.getName();
     }
 
@@ -49,29 +49,31 @@ public class HttpResource implements Resource{
         }
     }
 
-    @Override
     public ResourceStatus getStatus() {
-        if (resourceStatus.isDataToOld()) {
-            check();
-        }
         return resourceStatus;
     }
 
-    private void check(){
+    @Override
+    public void checkStatus() {
+        if (resourceStatus.isDataToOld()) {
+            check();
+        }
+    }
+
+    private synchronized void check() {
         LOG.info("Checking....");
+        resourceStatus.updateLastCheck();
         String responseString = null;
         int responseStatus = -1;
         HttpGet httpget = new HttpGet(url);
         try {
             String contentType = (String) dataJSON.get("ContentType");
-            if (contentType != null){
+            if (contentType != null) {
                 httpget.setHeader("Content-Type", contentType);
-            }
-            else {
+            } else {
                 httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
         }
         try {
@@ -85,13 +87,10 @@ public class HttpResource implements Resource{
                 }
                 responseString = responseBody.toString();
                 responseStatus = response.getStatusLine().getStatusCode();
-            }
-            finally {
+            } finally {
                 EntityUtils.consumeQuietly(response.getEntity());
             }
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             LOG.error("ERROR: " + e.getMessage());
             resourceStatus.setStatus(false, e.getMessage());

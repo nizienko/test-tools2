@@ -21,7 +21,7 @@ public class SelectResource implements Resource {
     private TestStand testStand;
 
     @Override
-    public String toString(){
+    public String toString() {
         return resourceStatus.getName();
     }
 
@@ -39,7 +39,7 @@ public class SelectResource implements Resource {
             resourceStatus.setBroken(true);
             LOG.error("Error!!: " + e.getMessage());
         }
-        resourceStatus = new ResourceStatus(60);
+        resourceStatus = new ResourceStatus(120);
         try {
             String name = (String) dataJSON.get("name");
             resourceStatus.setName(name);
@@ -53,15 +53,13 @@ public class SelectResource implements Resource {
         }
         try {
             SQL = (String) dataJSON.get("SQL");
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             resourceStatus.setBroken(true);
             LOG.error(e.getMessage());
         }
         try {
             expectedResult = (String) dataJSON.get("expectedResult");
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             resourceStatus.setBroken(true);
             LOG.error(e.getMessage());
         }
@@ -69,36 +67,37 @@ public class SelectResource implements Resource {
 
     @Override
     public ResourceStatus getStatus() {
-        if (resourceStatus.isDataToOld()) {
-            check(true);
-        }
         return resourceStatus;
     }
 
-    private void check(boolean first){
+    @Override
+    public void checkStatus() {
+        if (resourceStatus.isDataToOld()) {
+            check(true);
+        }
+    }
+
+    private synchronized void check(boolean first) {
+        resourceStatus.updateLastCheck();
         try {
             if (SQL.toUpperCase().startsWith("SELECT") && !(SQL.replaceAll(";", "").toUpperCase().endsWith("FOR UPDATE"))) {
                 String result = jdbcTemplate.queryForObject(SQL, String.class);
                 if (expectedResult.equals(result)) {
                     resourceStatus.setStatus(true, "Result: " + result);
-                }
-                else {
+                } else {
                     resourceStatus.setStatus(false, "Result: " + result + ", expected: " + expectedResult);
                 }
-            }
-            else {
+            } else {
                 resourceStatus.setStatus(false, "bad select " + SQL);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage());
             if ((first) && (e.getMessage().contains("data to read from socket"))) {
                 LOG.info("Going to try second time...");
                 testStand.loadDataSources();
                 this.init(data);
                 check(false);
-            }
-            else {
+            } else {
                 resourceStatus.setStatus(false, e.getMessage());
             }
         }

@@ -49,4 +49,9 @@
         <constructor-arg ref="daoContainer"/>
     </bean>
 
+    <bean id="testStandUpdater" class="ru.yamoney.test.testtools2.teststand.TestStandUpdaterDaemon" init-method="init"
+          scope="singleton">
+        <constructor-arg value="5"/>
+    </bean>
+
 </beans>

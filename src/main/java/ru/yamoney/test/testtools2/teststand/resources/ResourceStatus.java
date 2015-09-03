@@ -20,14 +20,18 @@ public class ResourceStatus {
         this.isOnline = false;
     }
 
+    public void updateLastCheck() {
+        lastCheck = new Date();
+    }
+
     public void setStatus(boolean isOnline, String statusMeassage) {
         this.isOnline = isOnline;
         this.statusMeassage = statusMeassage;
         lastCheck = new Date();
     }
 
-    public boolean isDataToOld(){
-        return  (lastCheck == null || ( new Date().getTime() - lastCheck.getTime() > s*1000));
+    public boolean isDataToOld() {
+        return (lastCheck == null || (new Date().getTime() - lastCheck.getTime() > s * 1000));
     }
 
     public String getStatusMeassage() {

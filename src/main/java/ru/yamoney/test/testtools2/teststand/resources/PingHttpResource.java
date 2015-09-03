@@ -6,7 +6,6 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import ru.yamoney.test.testtools2.common.Application;
 
 import java.io.BufferedReader;
@@ -52,14 +51,18 @@ public class PingHttpResource implements Resource {
 
     @Override
     public ResourceStatus getStatus() {
-        if (resourceStatus.isDataToOld()) {
-            check();
-        }
         return resourceStatus;
     }
 
-    private void check() {
+    public void checkStatus() {
+        if (resourceStatus.isDataToOld()) {
+            check();
+        }
+    }
+
+    private synchronized void check() {
         LOG.info("Checking....");
+        resourceStatus.updateLastCheck();
         String version = null;
         String status = null;
         String statusMessage = null;
@@ -108,7 +111,7 @@ public class PingHttpResource implements Resource {
             httpget.releaseConnection();
         }
         if (responseStatus == 200) {
-            resourceStatus.setStatus(true, "Version: " + version + ", Status: " + status + "(" + statusMessage + ")");
+            resourceStatus.setStatus(true, "Version: " + version + ";    Status: " + status + "(" + statusMessage + ")");
         }
     }
 }

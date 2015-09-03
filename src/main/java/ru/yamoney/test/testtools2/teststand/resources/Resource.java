@@ -9,4 +9,6 @@ public interface Resource {
 
     public ResourceStatus getStatus();
 
+    public void checkStatus();
+
 }
