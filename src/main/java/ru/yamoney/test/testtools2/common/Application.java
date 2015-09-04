@@ -1,12 +1,15 @@
 package ru.yamoney.test.testtools2.common;
 
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HttpContext;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +74,7 @@ public class Application {
                 .build();
         httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(defaultRequestConfig)
-                .build();;
+                .disableAutomaticRetries()
+                .build();
     }
 }
