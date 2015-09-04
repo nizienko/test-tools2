@@ -4,33 +4,34 @@ import ru.yamoney.test.testtools2.common.AbstractDaemon;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.common.ApplicationThread;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by def on 04.09.15.
  */
-public class TestStandUpdaterDaemon extends AbstractDaemon implements ApplicationThread {
-    private TestStandUpdater testStandUpdater;
+public class TestStandUpdaterDaemon {
+    private TestStand testStand;
+    private Integer count;
 
-    public TestStandUpdaterDaemon(Integer period) {
-        super(period);
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public void init() {
-        Application.addThread(this);
-    }
-
-    @Override
-    protected void process() {
-        if (testStandUpdater == null) {
-            testStandUpdater = new TestStandUpdater((TestStand) Application.getCtx().getBean("testStand"));
-        }
-        for (int i = 0; i < 5; i++) {
-            Thread thread = new Thread(testStandUpdater);
-            thread.start();
+        for (int i = 0; i < count; i++) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            TestStandUpdater testStandUpdater = new TestStandUpdater(5);
+            testStandUpdater.setTestStand(testStand);
+            Application.addThread(testStandUpdater);
         }
+    }
+
+    public void setTestStand(TestStand testStand) {
+        this.testStand = testStand;
     }
 }

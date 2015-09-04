@@ -51,7 +51,8 @@
 
     <bean id="testStandUpdater" class="ru.yamoney.test.testtools2.teststand.TestStandUpdaterDaemon" init-method="init"
           scope="singleton">
-        <constructor-arg value="5"/>
+        <property name="count" value="5"/>
+        <property name="testStand" ref="testStand"/>
     </bean>
 
 </beans>

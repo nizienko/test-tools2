@@ -146,6 +146,5 @@
             <artifactId>jetty-websocket</artifactId>
             <version>8.1.9.v20130131</version>
         </dependency>
-
     </dependencies>
 </project>
