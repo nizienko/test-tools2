@@ -40,9 +40,9 @@ public class TestExecution {
             jsonObject.put("execution", execution);
             jsonObject.put("issue",  issue);
             jsonObject.put("name",  name);
-            jsonObject.put("status", status + "");
+            jsonObject.put("status", String.valueOf(status));
             jsonObject.put("comment", comment);
-            jsonObject.put("publicated", publicated + "");
+            jsonObject.put("publicated", String.valueOf(publicated));
             if (failReason != null) {
                 jsonObject.put("reason", failReason);
             }
@@ -50,7 +50,7 @@ public class TestExecution {
                 jsonObject.put("reasonComment", reasonComment);
             }
             if (acceptance != null) {
-                jsonObject.put("acceptance", acceptance + "");
+                jsonObject.put("acceptance", String.valueOf(acceptance));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -55,4 +55,9 @@
         <property name="testStand" ref="testStand"/>
     </bean>
 
+    <bean id="postponedChecker" class="ru.yamoney.test.testtools2.postponecheck.PostponedCheckDaemon" init-method="init"
+          scope="singleton">
+        <constructor-arg value="10"/>
+    </bean>
+
 </beans>
