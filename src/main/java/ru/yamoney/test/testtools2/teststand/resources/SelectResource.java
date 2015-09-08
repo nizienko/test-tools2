@@ -17,7 +17,6 @@ public class SelectResource implements Resource {
     private JdbcTemplate jdbcTemplate;
     private String SQL;
     private String expectedResult;
-    private String data;
     private TestStand testStand;
 
     @Override
@@ -26,10 +25,10 @@ public class SelectResource implements Resource {
     }
 
     @Override
-    public void init(String data) {
+    public void init(JSONObject data) {
+        resourceStatus = new ResourceStatus(120);
         try {
-            this.data = data;
-            dataJSON = new JSONObject(data);
+            this.dataJSON = data;
             testStand = (TestStand) Application.getCtx().getBean("testStand");
             jdbcTemplate = testStand.getJdbcTemplateContainer().getJdbcTemplates().get(dataJSON.get("dataSource"));
             if (jdbcTemplate == null) {
@@ -39,7 +38,6 @@ public class SelectResource implements Resource {
             resourceStatus.setBroken(true);
             LOG.error("Error!!: " + e.getMessage());
         }
-        resourceStatus = new ResourceStatus(120);
         try {
             String name = (String) dataJSON.get("name");
             resourceStatus.setName(name);
@@ -95,8 +93,6 @@ public class SelectResource implements Resource {
             if ((first) && (e.getMessage().contains("data to read from socket"))) {
                 LOG.info("Going to try second time...");
                 testStand.loadDataSources();
-                this.init(data);
-                check(false);
             } else {
                 resourceStatus.setStatus(false, e.getMessage());
             }

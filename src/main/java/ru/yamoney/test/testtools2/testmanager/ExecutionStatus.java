@@ -12,7 +12,7 @@ public enum ExecutionStatus {
     }
 
     public String getValue(){
-        return value+"";
+        return String.valueOf(value);
     }
 
     public Integer getIntegerValue(){

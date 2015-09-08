@@ -28,13 +28,11 @@ public class CalypsoHttpResource implements Resource {
     }
 
     @Override
-    public void init(String data) {
+    public void init(JSONObject data) {
         resourceStatus = new ResourceStatus(5);
-        try {
-            dataJSON = new JSONObject(data);
-        } catch (JSONException e) {
+        dataJSON = data;
+        if (dataJSON == null) {
             resourceStatus.setBroken(true);
-            LOG.error(e.getMessage());
         }
         try {
             url = (String) dataJSON.get("url");

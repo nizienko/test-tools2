@@ -1,10 +1,15 @@
 package ru.yamoney.test.testtools2.testmanager;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ru.yamoney.test.testtools2.postponecheck.PostponedCheck;
+import ru.yamoney.test.testtools2.postponecheck.PostponerdCheckFactory;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by def on 02.04.15.
@@ -21,10 +26,11 @@ public class TestExecution {
     private Date lastChangeDt;
     private Integer status;
     private String comment;
-    private Integer publicated;
+    private Integer published;
     private String failReason;
     private String reasonComment;
     private Integer acceptance;
+    private List<PostponedCheck> postponedCheckList;
     public static final Logger LOG = Logger.getLogger(TestExecution.class);
 
     public String toString(){
@@ -42,7 +48,7 @@ public class TestExecution {
             jsonObject.put("name",  name);
             jsonObject.put("status", String.valueOf(status));
             jsonObject.put("comment", comment);
-            jsonObject.put("publicated", String.valueOf(publicated));
+            jsonObject.put("published", String.valueOf(published));
             if (failReason != null) {
                 jsonObject.put("reason", failReason);
             }
@@ -52,10 +58,16 @@ public class TestExecution {
             if (acceptance != null) {
                 jsonObject.put("acceptance", String.valueOf(acceptance));
             }
+            if (postponedCheckList != null) {
+                JSONArray jsonArray = new JSONArray();
+                for (PostponedCheck postponedCheck : postponedCheckList) {
+                    jsonArray.put(postponedCheck.getJSON());
+                }
+                jsonObject.put("postponedCheckList", jsonArray);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        LOG.info(jsonObject.toString());
         return jsonObject;
     }
 
@@ -74,7 +86,7 @@ public class TestExecution {
             name = (String) jsonObject.get("name");
             status = Integer.parseInt((String) jsonObject.get("status"));
             comment = (String) jsonObject.get("comment");
-            publicated = Integer.parseInt((String) jsonObject.get("publicated"));
+            published = Integer.parseInt((String) jsonObject.get("published"));
             try {
                 failReason = (String) jsonObject.get("reason");
             }
@@ -93,8 +105,34 @@ public class TestExecution {
             catch (Exception e) {
                 acceptance = null;
             }
+            try {
+                JSONArray jsonArray = (JSONArray) jsonObject.get("postponedCheckList");
+                postponedCheckList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    postponedCheckList.add(PostponerdCheckFactory.getPostponedCheck((JSONObject) jsonArray.get(i)));
+                }
+            }
+            catch (Exception e) {
+                postponedCheckList = null;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setPostponedCheckList(JSONArray jsonArray){
+        postponedCheckList = new ArrayList<>();
+        LOG.info("array:" + jsonArray.toString());
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                postponedCheckList.add(
+                        PostponerdCheckFactory
+                                .getPostponedCheck(
+                                        (JSONObject) jsonArray
+                                                .get(i)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -171,11 +209,11 @@ public class TestExecution {
     }
 
     public Integer isPublicated() {
-        return publicated;
+        return published;
     }
 
-    public void setPublicated(Integer isPublicated) {
-        this.publicated = isPublicated;
+    public void setPublished(Integer isPublicated) {
+        this.published = isPublicated;
         this.setLastChangeDt(new Date());
     }
 
@@ -217,5 +255,13 @@ public class TestExecution {
 
     public void setAcceptance(Integer acceptance) {
         this.acceptance = acceptance;
+    }
+
+    public List<PostponedCheck> getPostponedCheckList() {
+        return postponedCheckList;
+    }
+
+    public void setPostponedCheckList(List<PostponedCheck> postponedCheckList) {
+        this.postponedCheckList = postponedCheckList;
     }
 }

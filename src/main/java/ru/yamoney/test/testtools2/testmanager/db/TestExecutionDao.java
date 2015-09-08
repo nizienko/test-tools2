@@ -2,6 +2,7 @@ package ru.yamoney.test.testtools2.testmanager.db;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yamoney.test.testtools2.postponecheck.PostponedCheck;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.vaadin.testresults.TestResultsFilter;
@@ -48,10 +49,18 @@ public class TestExecutionDao {
         return jdbcTemplate.query(SQL, new TestExecutionMapper());
     }
 
+    public List<TestExecution> getProcessing() {
+        String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
+                "  FROM execution where data->>'status'=?;\n";
+        return jdbcTemplate.query(SQL, new Object[]{
+                ExecutionStatus.PROCESSING.getValue()}, new TestExecutionMapper());
+    }
+
+
     @Transactional
     public void setPublished(TestExecution te) {
         TestExecution te2 = get(te.getId());
-        te2.setPublicated(1);
+        te2.setPublished(1);
         updateTestExecution(te2);
     }
 
@@ -77,6 +86,20 @@ public class TestExecutionDao {
         updateTestExecution(te);
     }
 
+    @Transactional
+    public synchronized void setStatus(int id, ExecutionStatus status) {
+        TestExecution te = get(id);
+        te.setStatus(status.getIntegerValue());
+        updateTestExecution(te);
+    }
+
+    @Transactional
+    public synchronized void updatePostponedChecks(int id, List<PostponedCheck> checks) {
+        TestExecution te = get(id);
+        te.setPostponedCheckList(checks);
+        updateTestExecution(te);
+    }
+
 
     public void updateTestExecution(TestExecution te) {
         String SQL = "UPDATE execution\n" +
@@ -99,11 +122,7 @@ public class TestExecutionDao {
     }
 
     public Integer countByFilter(TestResultsFilter filter) {
-        StringBuffer sqlText = new StringBuffer();
-        sqlText.append("SELECT count(*) FROM execution");
-        sqlText.append(filter.getSql());
-        sqlText.append(";");
-        String SQL = sqlText.toString();
+        String SQL = "SELECT count(*) FROM execution" + filter.getSql() + ";";
         return jdbcTemplate.queryForObject(SQL, filter.getObjects(), Integer.class);
     }
 
@@ -124,48 +143,28 @@ public class TestExecutionDao {
             String SQL = "SELECT distinct data->>'project' AS project FROM execution;";
             return jdbcTemplate.queryForList(SQL);
         } else {
-            StringBuffer sqlText = new StringBuffer();
-            sqlText.append("SELECT distinct data->>'project' AS project FROM execution");
-            sqlText.append(filter.getSql());
-            sqlText.append(" order by project;");
-            String SQL = sqlText.toString();
+            String SQL = "SELECT distinct data->>'project' AS project FROM execution" + filter.getSql() + " order by project;";
             return jdbcTemplate.queryForList(SQL, filter.getObjects());
         }
     }
 
     public List<Map<String, Object>> selectVersions(TestResultsFilter filter) {
-        StringBuffer sqlText = new StringBuffer();
-        sqlText.append("SELECT distinct data->>'version' AS version FROM execution");
-        sqlText.append(filter.getSql());
-        sqlText.append(" order by version desc;");
-        String SQL = sqlText.toString();
+        String SQL = "SELECT distinct data->>'version' AS version FROM execution" + filter.getSql() + " order by version desc;";
         return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectBuilds(TestResultsFilter filter) {
-        StringBuffer sqlText = new StringBuffer();
-        sqlText.append("SELECT distinct data->>'build' AS build FROM execution");
-        sqlText.append(filter.getSql());
-        sqlText.append(" order by build desc;");
-        String SQL = sqlText.toString();
+        String SQL = "SELECT distinct data->>'build' AS build FROM execution" + filter.getSql() + " order by build desc;";
         return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectExecutions(TestResultsFilter filter) {
-        StringBuffer sqlText = new StringBuffer();
-        sqlText.append("SELECT distinct data->>'execution' AS execution FROM execution");
-        sqlText.append(filter.getSql());
-        sqlText.append(" order by execution desc;");
-        String SQL = sqlText.toString();
+        String SQL = "SELECT distinct data->>'execution' AS execution FROM execution" + filter.getSql() + " order by execution desc;";
         return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 
     public List<Map<String, Object>> selectIssues(TestResultsFilter filter) {
-        StringBuffer sqlText = new StringBuffer();
-        sqlText.append("SELECT distinct data->>'issue' AS issue FROM execution");
-        sqlText.append(filter.getSql());
-        sqlText.append(" order by issue;");
-        String SQL = sqlText.toString();
+        String SQL = "SELECT distinct data->>'issue' AS issue FROM execution" + filter.getSql() + " order by issue;";
         return jdbcTemplate.queryForList(SQL, filter.getObjects());
     }
 

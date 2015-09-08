@@ -83,6 +83,39 @@ CREATE INDEX execution_status_index ON
 CREATE INDEX acceptance_index ON
       execution ((data->>'acceptance'));
 
+-- Sequence: service_id_seq
+
+-- DROP SEQUENCE service_id_seq;
+
+CREATE SEQUENCE service_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 13
+  CACHE 1;
+ALTER TABLE service_id_seq
+  OWNER TO postgres;
+
+
+  -- Sequence: testand_id_seq
+
+-- DROP SEQUENCE testand_id_seq;
+
+CREATE SEQUENCE testand_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 21
+  CACHE 1;
+ALTER TABLE testand_id_seq
+  OWNER TO postgres;
+
+
+
+  -- Table: resources
+
+-- DROP TABLE resources;
+
 CREATE TABLE resources
 (
   id integer NOT NULL DEFAULT nextval('testand_id_seq'::regclass),
@@ -97,13 +130,22 @@ ALTER TABLE resources
   OWNER TO postgres;
 
 
-CREATE SEQUENCE services_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE services_id_seq
+
+
+  -- Table: services
+
+-- DROP TABLE services;
+
+CREATE TABLE services
+(
+  id integer NOT NULL DEFAULT nextval('service_id_seq'::regclass),
+  data jsonb,
+  CONSTRAINT services_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE services
   OWNER TO postgres;
 
   

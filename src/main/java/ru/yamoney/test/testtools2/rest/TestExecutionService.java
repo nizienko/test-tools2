@@ -1,6 +1,7 @@
 package ru.yamoney.test.testtools2.rest;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
@@ -41,8 +42,9 @@ public class TestExecutionService {
             @FormParam("name") String name,
             @FormParam("status") String status,
             @FormParam("comment") String comment,
-            @FormParam("acceptance") String acceptance
-            ){
+            @FormParam("acceptance") String acceptance,
+            @FormParam("postponedChecks") String postponedChecks
+    ){
         if ((project == null) || (project.equals(""))) {
             return Response.status(400).entity(buildJSONAnswer(-1, "project is empty")).build();
         }
@@ -86,7 +88,7 @@ public class TestExecutionService {
         testExecution.setStatus(executionStatus);
         testExecution.setComment(comment);
         testExecution.setExecutionDt(new Date());
-        testExecution.setPublicated(0);
+        testExecution.setPublished(0);
         testExecution.setFailReason(ReasonStatus.NOT_SET.name());
         if (acceptance != null) {
             try {
@@ -95,6 +97,15 @@ public class TestExecutionService {
             }
             catch (NumberFormatException e) {
                 LOG.error("Acceptance value not correct int: " + acceptance);
+            }
+        }
+        if (postponedChecks != null) {
+            try {
+                LOG.info(postponedChecks);
+                testExecution.setPostponedCheckList(new JSONArray(postponedChecks));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
         try {

@@ -23,9 +23,8 @@ public class JdbcTemplateContainer {
         jdbcTemplates = new HashMap<>();
     }
 
-    public void addOracleDataSource(String data) {
+    public void addOracleDataSource(JSONObject dataJSON) {
         try {
-            JSONObject dataJSON = new JSONObject(data);
             BasicDataSource source = new BasicDataSource();
             source.setDriverClassName("oracle.jdbc.driver.OracleDriver");
             String url = "jdbc:oracle:thin:@" + dataJSON.get("serverName") + ":" + dataJSON.get("portNumber") +
@@ -47,9 +46,8 @@ public class JdbcTemplateContainer {
         }
     }
 
-    public void addPostgresDataSource(String data) {
+    public void addPostgresDataSource(JSONObject dataJSON) {
         try {
-            JSONObject dataJSON = new JSONObject(data);
             Jdbc3PoolingDataSource source = new Jdbc3PoolingDataSource();
             source.setServerName((String) dataJSON.get("serverName"));
             source.setPortNumber(Integer.parseInt((String) dataJSON.get("portNumber")));

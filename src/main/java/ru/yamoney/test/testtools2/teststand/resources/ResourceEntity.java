@@ -1,12 +1,15 @@
 package ru.yamoney.test.testtools2.teststand.resources;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by def on 28.05.15.
  */
 public class ResourceEntity {
     private int id;
     private String type;
-    private String data;
+    private JSONObject data;
 
     public int getId() {
         return id;
@@ -16,12 +19,16 @@ public class ResourceEntity {
         this.id = id;
     }
 
-    public String getData() {
+    public JSONObject getData() {
         return data;
     }
 
     public void setData(String data) {
-        this.data = data;
+        try {
+            this.data = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getType() {
