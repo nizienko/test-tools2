@@ -102,7 +102,6 @@ public class PingHttpResource implements Resource {
         }
 
         catch (Exception e) {
-            e.printStackTrace();
             LOG.error("ERROR: " + e.getMessage());
             resourceStatus.setStatus(false, e.getMessage());
         } finally {
