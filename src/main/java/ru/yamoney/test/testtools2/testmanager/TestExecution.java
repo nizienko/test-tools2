@@ -61,7 +61,10 @@ public class TestExecution {
             if (postponedCheckList != null) {
                 JSONArray jsonArray = new JSONArray();
                 for (PostponedCheck postponedCheck : postponedCheckList) {
-                    jsonArray.put(postponedCheck.getJSON());
+                    LOG.info("postponedcheck: " + postponedCheck);
+                    jsonArray.put(
+                            postponedCheck
+                                    .getJSON());
                 }
                 jsonObject.put("postponedCheckList", jsonArray);
             }
@@ -86,7 +89,12 @@ public class TestExecution {
             name = (String) jsonObject.get("name");
             status = Integer.parseInt((String) jsonObject.get("status"));
             comment = (String) jsonObject.get("comment");
-            published = Integer.parseInt((String) jsonObject.get("published"));
+            try {
+                published = Integer.parseInt((String) jsonObject.get("published"));
+            }
+            catch (JSONException e) {
+                published = 0;
+            }
             try {
                 failReason = (String) jsonObject.get("reason");
             }
@@ -125,11 +133,14 @@ public class TestExecution {
         LOG.info("array:" + jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                postponedCheckList.add(
-                        PostponerdCheckFactory
-                                .getPostponedCheck(
-                                        (JSONObject) jsonArray
-                                                .get(i)));
+                PostponedCheck postponedCheck = PostponerdCheckFactory
+                        .getPostponedCheck(
+                                (JSONObject) jsonArray
+                                        .get(i));
+                if (postponedCheck != null) {
+                    postponedCheckList.add(postponedCheck);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -212,8 +223,8 @@ public class TestExecution {
         return published;
     }
 
-    public void setPublished(Integer isPublicated) {
-        this.published = isPublicated;
+    public void setPublished(Integer published) {
+        this.published = published;
         this.setLastChangeDt(new Date());
     }
 

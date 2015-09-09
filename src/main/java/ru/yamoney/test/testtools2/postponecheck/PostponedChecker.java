@@ -42,8 +42,8 @@ public class PostponedChecker {
                         failedChecks++;
                         comment.append("failed: " + postponedCheck.getDescription() + "; ");
                     }
-                    comment.append("passed " + passedChecks + " checks");
                 }
+                comment.append("passed " + passedChecks + " postponed checks;");
                 daoContainer.getTestExecutionDao().updatePostponedChecks(testExecution.getId(), testExecution.getPostponedCheckList());
                 daoContainer.getTestExecutionDao().setComment(testExecution.getId(), comment.toString());
                 if (failedChecks > 0) {
@@ -57,7 +57,7 @@ public class PostponedChecker {
                 }
             }
             else {
-                LOG.info("Nothing to check");
+                daoContainer.getTestExecutionDao().setComment(testExecution.getId(), "Postponed check skipped");
                 daoContainer.getTestExecutionDao().setStatus(testExecution.getId(), ExecutionStatus.PASSED);
             }
         }

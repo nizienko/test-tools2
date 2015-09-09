@@ -67,7 +67,6 @@ public class PostponedSelectCheck implements PostponedCheck {
     }
 
     public void process(){
-        LOG.info("select checker: " + getJSON().toString());
         if (executionStatus == ExecutionStatus.PROCESSING.getIntegerValue()
                 && new Date().compareTo(scheduledDate) > 0) {
             TestStand testStand = (TestStand) Application.getCtx().getBean("testStand");
@@ -77,8 +76,10 @@ public class PostponedSelectCheck implements PostponedCheck {
             }
             else {
                 try {
-                    if (select.toUpperCase().startsWith("SELECT") && !(select.replaceAll(";", "").toUpperCase().endsWith("FOR UPDATE"))) {
+                    if (select.toUpperCase().startsWith("SELECT") && !(select.toUpperCase().contains("FOR UPDATE"))) {
+                        LOG.info("select: " + select);
                         String result = jdbcTemplate.queryForObject(select, String.class);
+                        LOG.info("result: " + result);
                         if (expectedResult.equals(result)) {
                             executionStatus = ExecutionStatus.PASSED.getIntegerValue();
                         } else {
@@ -91,6 +92,8 @@ public class PostponedSelectCheck implements PostponedCheck {
                     }
                 } catch (Exception e) {
                     description = description + " (" + e.getMessage() + ")";
+                    e.printStackTrace();
+                    executionStatus = ExecutionStatus.FAILED.getIntegerValue();
                     if ((e.getMessage().contains("data to read from socket"))) {
                         LOG.info("Going to try second time...");
                         testStand.loadDataSources();

@@ -57,7 +57,7 @@
 
     <bean id="postponedChecker" class="ru.yamoney.test.testtools2.postponecheck.PostponedCheckDaemon" init-method="init"
           scope="singleton">
-        <constructor-arg value="60"/>
+        <constructor-arg value="10"/>
         <property name="daoContainer" ref="daoContainer"/>
     </bean>
 

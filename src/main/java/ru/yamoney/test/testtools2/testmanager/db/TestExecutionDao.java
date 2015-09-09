@@ -45,7 +45,7 @@ public class TestExecutionDao {
 
     public List<TestExecution> getNotPublished() {
         String SQL = "SELECT id, data, execution_dt, last_change_dt\n" +
-                "  FROM execution where data->>'publicated' = '0';\n";
+                "  FROM execution where data->>'published' = '0';\n";
         return jdbcTemplate.query(SQL, new TestExecutionMapper());
     }
 
