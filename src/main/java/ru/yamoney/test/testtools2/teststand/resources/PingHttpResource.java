@@ -21,7 +21,7 @@ public class PingHttpResource implements Resource {
     private JSONObject dataJSON;
 
     @Override
-    public String toString(){
+    public String toString() {
         return resourceStatus.getName();
     }
 
@@ -68,14 +68,12 @@ public class PingHttpResource implements Resource {
         HttpGet httpget = new HttpGet(url);
         try {
             String contentType = (String) dataJSON.get("ContentType");
-            if (contentType != null){
+            if (contentType != null) {
                 httpget.setHeader("Content-Type", contentType);
-            }
-            else {
+            } else {
                 httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             httpget.setHeader("Content-Type", "text/html; charset=UTF-8");
         }
         try {
@@ -90,8 +88,7 @@ public class PingHttpResource implements Resource {
                 }
                 root = new JSONObject(responseBody.toString());
                 responseStatus = response.getStatusLine().getStatusCode();
-            }
-            finally {
+            } finally {
                 EntityUtils.consumeQuietly(response.getEntity());
             }
             JSONObject serviceInfoJson = (JSONObject) root.get("serviceInfo");
@@ -99,9 +96,7 @@ public class PingHttpResource implements Resource {
             JSONObject statusJson = (JSONObject) root.get("status");
             status = statusJson.getString("code");
             statusMessage = statusJson.getString("message");
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             LOG.error("ERROR: " + e.getMessage());
             resourceStatus.setStatus(false, e.getMessage());
         } finally {

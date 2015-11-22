@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * Created by def on 05.07.15.
  */
-public class ServiceMapper  implements RowMapper<Service> {
+public class ServiceMapper implements RowMapper<Service> {
     @Override
     public Service mapRow(ResultSet rs, int rowNum) throws SQLException {
         Service service = new Service(rs.getInt("id"), rs.getString("data"));

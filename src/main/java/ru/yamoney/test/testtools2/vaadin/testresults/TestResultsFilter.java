@@ -36,7 +36,6 @@ public class TestResultsFilter {
     }
 
 
-
     public String getProject() {
         return project;
     }
@@ -77,7 +76,7 @@ public class TestResultsFilter {
         this.issue = issue;
     }
 
-    public void setIssueTemp(String issue){
+    public void setIssueTemp(String issue) {
         this.issueTemp = issue;
     }
 
@@ -146,8 +145,7 @@ public class TestResultsFilter {
         if (issue != null && !"".equals(issue)) {
             sql.append(" and data->>'issue'=?");
             objects.add(issue);
-        }
-        else if (issueTemp != null && !"".equals(issueTemp)){
+        } else if (issueTemp != null && !"".equals(issueTemp)) {
             sql.append(" and data->>'issue'=?");
             objects.add(issueTemp);
         }
@@ -166,7 +164,7 @@ public class TestResultsFilter {
         return sql.toString();
     }
 
-    public String toString(){
+    public String toString() {
         StringBuffer str = new StringBuffer();
         if (project != null) {
             str.append(project);
@@ -183,7 +181,7 @@ public class TestResultsFilter {
         return str.toString();
     }
 
-    public Object[] getObjects(){
+    public Object[] getObjects() {
         return objects.toArray();
     }
 }

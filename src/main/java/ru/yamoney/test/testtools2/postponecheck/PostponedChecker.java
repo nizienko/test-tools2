@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
-import ru.yamoney.test.testtools2.teststand.TestStand;
 
 import java.util.List;
 
@@ -16,11 +15,11 @@ public class PostponedChecker {
 
     private DaoContainer daoContainer;
 
-    public PostponedChecker(DaoContainer daoContainer){
+    public PostponedChecker(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
     }
 
-    public void work(){
+    public void work() {
         List<TestExecution> testExecutions = daoContainer.getTestExecutionDao().getProcessing();
         for (TestExecution testExecution : testExecutions) {
             if (testExecution.getPostponedCheckList() != null) {
@@ -33,12 +32,10 @@ public class PostponedChecker {
                     postponedCheck.process();
                     if (postponedCheck.getStatus() == ExecutionStatus.PASSED.getIntegerValue()) {
                         passedChecks++;
-                    }
-                    else if (postponedCheck.getStatus() == ExecutionStatus.PROCESSING.getIntegerValue()) {
+                    } else if (postponedCheck.getStatus() == ExecutionStatus.PROCESSING.getIntegerValue()) {
                         processingChecks++;
                         comment.append("waiting: " + postponedCheck.getDescription() + "; ");
-                    }
-                    else if (postponedCheck.getStatus() == ExecutionStatus.FAILED.getIntegerValue()) {
+                    } else if (postponedCheck.getStatus() == ExecutionStatus.FAILED.getIntegerValue()) {
                         failedChecks++;
                         comment.append("failed: " + postponedCheck.getDescription() + "; ");
                     }
@@ -48,15 +45,12 @@ public class PostponedChecker {
                 daoContainer.getTestExecutionDao().setComment(testExecution.getId(), comment.toString());
                 if (failedChecks > 0) {
                     daoContainer.getTestExecutionDao().setStatus(testExecution.getId(), ExecutionStatus.FAILED);
-                }
-                else if (processingChecks > 0 ) {
+                } else if (processingChecks > 0) {
                     // leave processing status to do other checks in future
-                }
-                else {
+                } else {
                     daoContainer.getTestExecutionDao().setStatus(testExecution.getId(), ExecutionStatus.PASSED);
                 }
-            }
-            else {
+            } else {
                 daoContainer.getTestExecutionDao().setComment(testExecution.getId(), "Postponed check skipped");
                 daoContainer.getTestExecutionDao().setStatus(testExecution.getId(), ExecutionStatus.PASSED);
             }

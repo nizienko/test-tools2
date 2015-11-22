@@ -8,12 +8,14 @@ import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by def on 18.04.15.
  */
-public class CompareExecutionsLayout  extends GridLayout {
+public class CompareExecutionsLayout extends GridLayout {
     private Table table;
     private TestResultsFilterLayout testResultsFilterLayout1;
     private TestResultsFilterLayout testResultsFilterLayout2;
@@ -72,17 +74,17 @@ public class CompareExecutionsLayout  extends GridLayout {
         this.addComponent(table);
     }
 
-    private void update(){
+    private void update() {
         table.removeAllItems();
         Set<String> issues = new HashSet<>();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout1.getFilter())) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout1.getFilter())) {
             issues.add((String) p.get("issue"));
         }
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout2.getFilter())) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout2.getFilter())) {
             issues.add((String) p.get("issue"));
         }
         int i = 1;
-        for (String issue: issues) {
+        for (String issue : issues) {
             String name = daoContainer.getTestExecutionDao().getNameByIssue(issue);
             testResultsFilterLayout1.getFilter().setIssueTemp(issue);
             testResultsFilterLayout1.getFilter().setStatus(ExecutionStatus.FAILED.getValue());
@@ -105,14 +107,14 @@ public class CompareExecutionsLayout  extends GridLayout {
             Integer status2 = getStatus(failed2, passed2);
 
             table.addItem(new Object[]{
-                            i,
-                            issue,
-                            name,
-                            getStatusText(status1) + "(" + passed1 + "/" + (passed1 + failed1) + ")",
-                            getStatusText(status2) + "(" + passed2 + "/" + (passed2 + failed2) + ")",
-                            getTotalStatus(status1, status2)
-                    }, new Integer(i));
-                    i++;
+                    i,
+                    issue,
+                    name,
+                    getStatusText(status1) + "(" + passed1 + "/" + (passed1 + failed1) + ")",
+                    getStatusText(status2) + "(" + passed2 + "/" + (passed2 + failed2) + ")",
+                    getTotalStatus(status1, status2)
+            }, new Integer(i));
+            i++;
         }
 
 
@@ -122,26 +124,29 @@ public class CompareExecutionsLayout  extends GridLayout {
         Integer status = 4;
         if (failed == 0 && passed > 0) {
             status = 1;
-        }
-        else if (failed > 0 && passed > 0) {
+        } else if (failed > 0 && passed > 0) {
             status = 2;
-        }
-        else if (failed >0 && passed == 0){
+        } else if (failed > 0 && passed == 0) {
             status = 3;
         }
         return status;
     }
-    private String getStatusText(Integer status){
+
+    private String getStatusText(Integer status) {
         switch (status) {
-            case 1: return "passed";
-            case 2: return "passed sometimes";
-            case 3: return "failed";
-            case 4: return "not run";
+            case 1:
+                return "passed";
+            case 2:
+                return "passed sometimes";
+            case 3:
+                return "failed";
+            case 4:
+                return "not run";
         }
         return "unknown";
     }
 
-    private String getTotalStatus(Integer status1, Integer status2){
+    private String getTotalStatus(Integer status1, Integer status2) {
         if (status1 > 1 && status2 == 1) {
             return "+";
         }

@@ -24,11 +24,9 @@ import java.security.cert.X509Certificate;
 public final class CloseableHttpClientFactory {
 
     public static final Logger LOG = Logger.getLogger(CloseableHttpClientFactory.class.getName());
-
+    private static final CloseableHttpClientFactory INSTANCE = new CloseableHttpClientFactory();
     private HttpClientBuilder httpClientBuilder;
     private SSLContextBuilder sslContextBuilder;
-
-    private static final CloseableHttpClientFactory INSTANCE = new CloseableHttpClientFactory();
 
     private CloseableHttpClientFactory() {
         httpClientBuilder = HttpClients.custom();

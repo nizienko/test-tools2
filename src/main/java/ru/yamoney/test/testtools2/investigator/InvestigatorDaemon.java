@@ -12,12 +12,13 @@ import ru.yamoney.test.testtools2.testmanager.TestManager;
  * Created by def on 11.05.15.
  */
 public class InvestigatorDaemon extends AbstractDaemon implements ApplicationThread, TestExecutionSubscriber {
+    private final int maxSkippedIterations = 360;
+    public boolean isSubscribed = false;
     private DaoContainer daoContainer;
     private int skippedIterations = 0;
     private boolean hasNewExecutions = true;
-    public boolean isSubscribed = false;
-    private final int maxSkippedIterations = 360;
     private InvestigatorWorker investigatorWorker;
+
     public InvestigatorDaemon(Integer period) {
         super(period);
     }
@@ -27,7 +28,7 @@ public class InvestigatorDaemon extends AbstractDaemon implements ApplicationThr
     }
 
 
-    public void init(){
+    public void init() {
         investigatorWorker = new InvestigatorWorker(daoContainer);
         Application.addThread(this);
     }
@@ -40,16 +41,17 @@ public class InvestigatorDaemon extends AbstractDaemon implements ApplicationThr
             skippedIterations = 0;
             LOG.info("Investigating failed tests");
             investigatorWorker.work();
-        }
-        else {
+        } else {
             skippedIterations++;
-        }    }
+        }
+    }
 
     @Override
     public void addTestExecution(TestExecution testExecution) {
         hasNewExecutions = true;
     }
-    private void subscribe(){
+
+    private void subscribe() {
         if (!isSubscribed) {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addSubscriber(this);
@@ -57,7 +59,7 @@ public class InvestigatorDaemon extends AbstractDaemon implements ApplicationThr
         }
     }
 
-    public String toString(){
+    public String toString() {
         return "Investigator";
     }
 }

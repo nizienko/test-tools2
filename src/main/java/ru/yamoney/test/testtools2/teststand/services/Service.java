@@ -3,22 +3,17 @@ package ru.yamoney.test.testtools2.teststand.services;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import ru.yamoney.test.testtools2.common.Application;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +31,7 @@ public class Service {
     private String name;
     private int id;
 
-    public Service(int id, String data){
+    public Service(int id, String data) {
         hiddenParams = new ArrayList<NameValuePair>();
         editableParams = new ArrayList<NameValuePair>();
         JSONObject jsonObject;
@@ -47,7 +42,7 @@ public class Service {
             JSONObject hiddenJSONParams = jsonObject.getJSONObject("hiddenParams");
             if (hiddenJSONParams != null) {
                 Iterator<String> keys = hiddenJSONParams.keys();
-                while(keys.hasNext()){
+                while (keys.hasNext()) {
                     String key = keys.next();
                     String val = null;
                     val = hiddenJSONParams.getString(key);
@@ -58,7 +53,7 @@ public class Service {
             JSONObject editableJSONParams = jsonObject.getJSONObject("editableParams");
             if (editableJSONParams != null) {
                 Iterator<String> keys = editableJSONParams.keys();
-                while(keys.hasNext()){
+                while (keys.hasNext()) {
                     String key = keys.next();
                     String val = null;
                     val = editableJSONParams.getString(key);
@@ -70,7 +65,7 @@ public class Service {
         }
     }
 
-    public List<NameValuePair> getAllParams(){
+    public List<NameValuePair> getAllParams() {
         List<NameValuePair> all = new ArrayList<>();
         all.addAll(editableParams);
         all.addAll(hiddenParams);
@@ -78,7 +73,7 @@ public class Service {
         return all;
     }
 
-    public List<NameValuePair> getEditableParams(){
+    public List<NameValuePair> getEditableParams() {
         return editableParams;
     }
 
@@ -86,7 +81,7 @@ public class Service {
         this.editableParams = editableParams;
     }
 
-    public String sendRequest(){
+    public String sendRequest() {
         HttpPost httpPost = new HttpPost(action);
         LOG.info("Request to " + action);
         httpPost.setHeader("Content-Type", "text/html; charset=UTF-8");
@@ -106,11 +101,9 @@ public class Service {
                     responseBody.append(line);
                 }
                 responseString = responseBody.toString();
-            }
-            catch (Exception e) {
-                return  e.getMessage();
-            }
-            finally {
+            } catch (Exception e) {
+                return e.getMessage();
+            } finally {
                 EntityUtils.consumeQuietly(response.getEntity());
             }
         } catch (IOException e) {

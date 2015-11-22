@@ -23,19 +23,18 @@ public class TestStand {
         resources = null;
     }
 
-    public void loadDataSources(){
+    public void loadDataSources() {
         jdbcTemplateContainer = new JdbcTemplateContainer(daoContainer);
-        for (ResourceEntity resourceEntity: this.daoContainer.getTestStandDao().getDataSources()) {
+        for (ResourceEntity resourceEntity : this.daoContainer.getTestStandDao().getDataSources()) {
             if (resourceEntity.getType().equals(ResourceType.DB_ORACLE.name())) {
                 jdbcTemplateContainer.addOracleDataSource(resourceEntity.getData());
-            }
-            else if (resourceEntity.getType().equals(ResourceType.DB_POSTGRES.name())) {
+            } else if (resourceEntity.getType().equals(ResourceType.DB_POSTGRES.name())) {
                 jdbcTemplateContainer.addPostgresDataSource(resourceEntity.getData());
             }
         }
     }
 
-    public List<Resource> getResources(){
+    public List<Resource> getResources() {
         if (resources == null) {
             loadResources();
         }
@@ -49,11 +48,10 @@ public class TestStand {
     }
 
 
-
-    public void loadResources(){
+    public void loadResources() {
         ResourceFactory resourceFactory = new ResourceFactory();
         resources = new ArrayList<>();
-        for(ResourceEntity resourceEntity: this.daoContainer.getTestStandDao().getResources()) {
+        for (ResourceEntity resourceEntity : this.daoContainer.getTestStandDao().getResources()) {
             LOG.info(resourceEntity.getType());
             Resource resource = resourceFactory.getResource(resourceEntity.getType());
             resource.init(resourceEntity.getData());
@@ -61,7 +59,7 @@ public class TestStand {
         }
     }
 
-    public JdbcTemplateContainer getJdbcTemplateContainer(){
+    public JdbcTemplateContainer getJdbcTemplateContainer() {
         return jdbcTemplateContainer;
     }
 }

@@ -14,10 +14,10 @@ import java.util.Date;
  * Created by def on 11.05.15.
  */
 public class InvestigatorWorker {
+    public static final Logger LOG = Logger.getLogger(InvestigatorWorker.class);
     private DaoContainer daoContainer;
     private TestResultsFilter filter;
     private Date lastCheck;
-    public static final Logger LOG = Logger.getLogger(InvestigatorWorker.class);
 
 
     public InvestigatorWorker(DaoContainer daoContainer) {
@@ -39,7 +39,7 @@ public class InvestigatorWorker {
         filter.setSinceDate(calendar.getTime());
         lastCheck.setTime(now.getTime());
 
-        for (TestExecution te: daoContainer.getTestExecutionDao().getByFilter(filter)) {
+        for (TestExecution te : daoContainer.getTestExecutionDao().getByFilter(filter)) {
             LOG.info("Investigating " + te.getName());
             daoContainer.getTestExecutionDao().setFailedReason(te.getId(), ReasonStatus.UNKNOWN.name());
             daoContainer.getTestExecutionDao().setReasonComment(te.getId(), "by default");

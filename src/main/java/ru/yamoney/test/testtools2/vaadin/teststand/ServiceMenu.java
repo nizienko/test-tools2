@@ -18,7 +18,7 @@ import java.util.*;
 public class ServiceMenu extends MenuBar {
     private List<Service> services;
 
-    public ServiceMenu(String name){
+    public ServiceMenu(String name) {
         final DaoContainer daoContainer = (DaoContainer) Application.getCtx().getBean("daoContainer");
         services = daoContainer.getServiceDao().getServices();
         MenuBar.MenuItem serviceItem = this.addItem(name, null);
@@ -27,7 +27,7 @@ public class ServiceMenu extends MenuBar {
             MenuBar.MenuItem currentItem = serviceItem;
             String[] menuItems = service.getName().split("\\|");
             int level = 0;
-            for (String menuItem: menuItems) {
+            for (String menuItem : menuItems) {
                 System.out.println(menuItem);
                 boolean alreadyHas = false;
                 try {
@@ -39,13 +39,13 @@ public class ServiceMenu extends MenuBar {
                             break;
                         }
                     }
-                } catch (NullPointerException e) {}
+                } catch (NullPointerException e) {
+                }
                 if (!alreadyHas) {
                     level++;
                     if (level == menuItems.length) {
                         currentItem.addItem(menuItem, new ServiceCommand(service));
-                    }
-                    else {
+                    } else {
                         MenuBar.MenuItem newItem = currentItem.addItem(menuItem, null);
                         currentItem = newItem;
                     }
@@ -56,7 +56,8 @@ public class ServiceMenu extends MenuBar {
 
     private class ServiceCommand implements MenuBar.Command {
         private Service service;
-        public ServiceCommand(Service service){
+
+        public ServiceCommand(Service service) {
             this.service = service;
         }
 
@@ -66,7 +67,7 @@ public class ServiceMenu extends MenuBar {
     }
 
     private class ServiceWindow extends Window {
-        public ServiceWindow(final Service service){
+        public ServiceWindow(final Service service) {
             super(service.getName().replace("|", ". "));
             final Map<String, TextField> params = new HashMap<>();
             String width = "600px";
@@ -79,7 +80,7 @@ public class ServiceMenu extends MenuBar {
             final Label resultLabel = new Label();
             resultLabel.setContentMode(ContentMode.HTML);
             mainLayout.addComponent(resultLabel);
-            for (final NameValuePair nvp: service.getEditableParams()) {
+            for (final NameValuePair nvp : service.getEditableParams()) {
                 TextField textField = new TextField(nvp.getName());
                 textField.setValue(nvp.getValue());
                 content.addComponent(textField);
@@ -91,7 +92,7 @@ public class ServiceMenu extends MenuBar {
                 public void buttonClick(Button.ClickEvent event) {
                     resultLabel.setValue("<i>processing</i>");
                     List<NameValuePair> newParams = new ArrayList<NameValuePair>();
-                    for (NameValuePair nvp: service.getEditableParams()){
+                    for (NameValuePair nvp : service.getEditableParams()) {
                         newParams.add(new BasicNameValuePair(nvp.getName(), params.get(nvp.getName()).getValue()));
                     }
                     service.setEditableParams(newParams);
@@ -102,13 +103,14 @@ public class ServiceMenu extends MenuBar {
             content.addComponent(button);
 
         }
-        private String createAnswer(String result){
+
+        private String createAnswer(String result) {
             try {
                 StringBuffer answer = new StringBuffer();
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject != null) {
                     Iterator<String> keys = jsonObject.keys();
-                    while(keys.hasNext()){
+                    while (keys.hasNext()) {
                         String key = keys.next();
                         String val = null;
                         val = jsonObject.getString(key);

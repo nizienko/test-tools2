@@ -5,8 +5,8 @@ import com.vaadin.data.Item;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.*;
 import ru.yamoney.test.testtools2.common.Application;
-import ru.yamoney.test.testtools2.teststand.resources.Resource;
 import ru.yamoney.test.testtools2.teststand.TestStand;
+import ru.yamoney.test.testtools2.teststand.resources.Resource;
 
 import java.util.Date;
 
@@ -19,7 +19,6 @@ public class TestStandLayout extends GridLayout {
     private CheckBox editCheckBox;
     private Button updateButton;
     private Button reloadSettingsButton;
-
 
 
     public TestStandLayout() {
@@ -84,7 +83,7 @@ public class TestStandLayout extends GridLayout {
             }
         });
 
-        HorizontalLayout buttonsLayout= new HorizontalLayout();
+        HorizontalLayout buttonsLayout = new HorizontalLayout();
         buttonsLayout.addComponent(updateButton);
         buttonsLayout.addComponent(reloadSettingsButton);
         this.addComponent(buttonsLayout);
@@ -92,10 +91,10 @@ public class TestStandLayout extends GridLayout {
         update();
     }
 
-    private void update(){
+    private void update() {
         table.removeAllItems();
         int i = 1;
-        for (Resource resource: testStand.getResources()) {
+        for (Resource resource : testStand.getResources()) {
             String status = "offline";
             if (resource.getStatus().isOnline()) {
                 status = "online";

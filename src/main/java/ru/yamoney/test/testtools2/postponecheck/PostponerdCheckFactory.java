@@ -11,7 +11,7 @@ import org.json.JSONObject;
  */
 public class PostponerdCheckFactory {
     @Nullable
-    public static PostponedCheck getPostponedCheck(JSONObject jsonObject){
+    public static PostponedCheck getPostponedCheck(JSONObject jsonObject) {
         try {
             if (jsonObject.getInt("type") == PostponedCheckType.SELECT.getValue()) {
                 return new PostponedSelectCheck(jsonObject);

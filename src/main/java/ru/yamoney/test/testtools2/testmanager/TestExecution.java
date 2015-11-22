@@ -15,6 +15,7 @@ import java.util.List;
  * Created by def on 02.04.15.
  */
 public class TestExecution {
+    public static final Logger LOG = Logger.getLogger(TestExecution.class);
     private int id;
     private String project;
     private String version;
@@ -31,21 +32,20 @@ public class TestExecution {
     private String reasonComment;
     private Integer acceptance;
     private List<PostponedCheck> postponedCheckList;
-    public static final Logger LOG = Logger.getLogger(TestExecution.class);
 
-    public String toString(){
+    public String toString() {
         return name;
     }
 
-    public JSONObject getJSON(){
+    public JSONObject getJSON() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("project", project);
             jsonObject.put("version", version);
             jsonObject.put("build", build);
             jsonObject.put("execution", execution);
-            jsonObject.put("issue",  issue);
-            jsonObject.put("name",  name);
+            jsonObject.put("issue", issue);
+            jsonObject.put("name", name);
             jsonObject.put("status", String.valueOf(status));
             jsonObject.put("comment", comment);
             jsonObject.put("published", String.valueOf(published));
@@ -74,11 +74,11 @@ public class TestExecution {
         return jsonObject;
     }
 
-    public String getData(){
+    public String getData() {
         return getJSON().toString();
     }
 
-    public void setData(String data){
+    public void setData(String data) {
         try {
             JSONObject jsonObject = new JSONObject(data);
             project = (String) jsonObject.get("project");
@@ -91,26 +91,22 @@ public class TestExecution {
             comment = (String) jsonObject.get("comment");
             try {
                 published = Integer.parseInt((String) jsonObject.get("published"));
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 published = 0;
             }
             try {
                 failReason = (String) jsonObject.get("reason");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 failReason = null;
             }
             try {
                 reasonComment = (String) jsonObject.get("reasonComment");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 reasonComment = null;
             }
             try {
                 acceptance = Integer.parseInt((String) jsonObject.get("acceptance"));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 acceptance = null;
             }
             try {
@@ -119,8 +115,7 @@ public class TestExecution {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     postponedCheckList.add(PostponerdCheckFactory.getPostponedCheck((JSONObject) jsonArray.get(i)));
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 postponedCheckList = null;
             }
         } catch (JSONException e) {
@@ -128,7 +123,7 @@ public class TestExecution {
         }
     }
 
-    public void setPostponedCheckList(JSONArray jsonArray){
+    public void setPostponedCheckList(JSONArray jsonArray) {
         postponedCheckList = new ArrayList<>();
         LOG.info("array:" + jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {

@@ -1,7 +1,6 @@
 package ru.yamoney.test.testtools2.testmanager.db;
 
 
-
 import org.springframework.jdbc.core.RowMapper;
 import ru.yamoney.test.testtools2.testmanager.TestConfiguration;
 

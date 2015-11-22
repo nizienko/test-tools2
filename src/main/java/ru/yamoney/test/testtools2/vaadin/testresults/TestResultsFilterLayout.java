@@ -2,7 +2,10 @@ package ru.yamoney.test.testtools2.vaadin.testresults;
 
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.*;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.TextField;
 import ru.yamoney.test.testtools2.common.DaoContainer;
 
 import java.util.Calendar;
@@ -12,6 +15,8 @@ import java.util.Map;
  * Created by def on 16.04.15.
  */
 public class TestResultsFilterLayout extends HorizontalLayout {
+    protected final String WIDTH = "90";
+    protected TestResultsFilter filter = new TestResultsFilter();
     private ListSelect projectSelect;
     private ListSelect versionSelect;
     private ListSelect buildSelect;
@@ -20,8 +25,7 @@ public class TestResultsFilterLayout extends HorizontalLayout {
     private DateField sinceDate;
     private DateField toDate;
     private DaoContainer daoContainer;
-    protected TestResultsFilter filter = new TestResultsFilter();
-    protected final String WIDTH = "90";
+
     public TestResultsFilterLayout(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
 
@@ -98,35 +102,35 @@ public class TestResultsFilterLayout extends HorizontalLayout {
         updateExecutionSelect();
     }
 
-    private void updateProjectSelect(){
+    private void updateProjectSelect() {
         projectSelect.removeAllItems();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectProjects()) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectProjects()) {
             projectSelect.addItem(p.get("project"));
         }
     }
 
-    private void updateVersionSelect(){
+    private void updateVersionSelect() {
         versionSelect.removeAllItems();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectVersions(filter)) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectVersions(filter)) {
             versionSelect.addItem(p.get("version"));
         }
     }
 
-    private void updateBuildSelect(){
+    private void updateBuildSelect() {
         buildSelect.removeAllItems();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectBuilds(filter)) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectBuilds(filter)) {
             buildSelect.addItem(p.get("build"));
         }
     }
 
-    private void updateExecutionSelect(){
+    private void updateExecutionSelect() {
         executionSelect.removeAllItems();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectExecutions(filter)) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectExecutions(filter)) {
             executionSelect.addItem(p.get("execution"));
         }
     }
 
-    public TestResultsFilter getFilter(){
+    public TestResultsFilter getFilter() {
         filter.setSinceDate(sinceDate.getValue());
         filter.setToDate(toDate.getValue());
         filter.setIssue(issueTextField.getValue());

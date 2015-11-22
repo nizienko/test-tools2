@@ -15,7 +15,7 @@ public enum PostponedCheckType {
         this.i = i;
     }
 
-    int getValue(){
+    int getValue() {
         return i;
     }
 }

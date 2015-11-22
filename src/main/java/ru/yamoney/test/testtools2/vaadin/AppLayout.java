@@ -4,7 +4,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import ru.yamoney.test.testtools2.vaadin.teststand.ServiceMenu;
 
 /**

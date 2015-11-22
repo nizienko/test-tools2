@@ -5,19 +5,17 @@ import ru.yamoney.test.testtools2.common.AbstractDaemon;
 import ru.yamoney.test.testtools2.common.Application;
 import ru.yamoney.test.testtools2.common.ApplicationThread;
 import ru.yamoney.test.testtools2.common.DaoContainer;
-import ru.yamoney.test.testtools2.teststand.TestStand;
 
 /**
  * Created by def on 07.09.15.
  */
 public class PostponedCheckDaemon extends AbstractDaemon implements ApplicationThread {
     public static final Logger LOG = Logger.getLogger(PostponedCheckDaemon.class);
-
+    private PostponedChecker postponedChecker;
+    private DaoContainer daoContainer;
     public PostponedCheckDaemon(Integer period) {
         super(period);
     }
-    private PostponedChecker postponedChecker;
-    private DaoContainer daoContainer;
 
     public void setDaoContainer(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
@@ -34,7 +32,7 @@ public class PostponedCheckDaemon extends AbstractDaemon implements ApplicationT
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "PostponedCheckDaemon";
     }
 }

@@ -12,12 +12,13 @@ import ru.yamoney.test.testtools2.testmanager.TestManager;
  * Created by def on 05.04.15.
  */
 public class PublisherDaemon extends AbstractDaemon implements ApplicationThread, TestExecutionSubscriber {
+    private final int maxSkippedIterations = 10;
+    public boolean isSubscribed = false;
     private DaoContainer daoContainer;
     private int skippedIterations = 0;
     private boolean hasNewExecutions = true;
-    public boolean isSubscribed = false;
-    private final int maxSkippedIterations = 10;
     private PublisherWorker publisherWorker;
+
     public PublisherDaemon(Integer period) {
         super(period);
     }
@@ -27,7 +28,7 @@ public class PublisherDaemon extends AbstractDaemon implements ApplicationThread
     }
 
 
-    public void init(){
+    public void init() {
         publisherWorker = new PublisherWorker(daoContainer);
         Application.addThread(this);
     }
@@ -40,14 +41,13 @@ public class PublisherDaemon extends AbstractDaemon implements ApplicationThread
             skippedIterations = 0;
             LOG.info("Publicating results");
             publisherWorker.work();
-        }
-        else {
+        } else {
             skippedIterations++;
         }
 
     }
 
-    public String toString(){
+    public String toString() {
         return "Publisher";
     }
 
@@ -56,7 +56,7 @@ public class PublisherDaemon extends AbstractDaemon implements ApplicationThread
         hasNewExecutions = true;
     }
 
-    private void subscribe(){
+    private void subscribe() {
         if (!isSubscribed) {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addSubscriber(this);

@@ -15,8 +15,8 @@ public class ResponseHandler {
     private final String script;
     private final String response;
     private final Map<String, String> parameters;
-    private boolean status;
     private final ScriptEngine engine;
+    private boolean status;
 
 
     public ResponseHandler(String script, String response, Map<String, String> parameters) {

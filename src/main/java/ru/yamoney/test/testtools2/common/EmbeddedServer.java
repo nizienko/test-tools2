@@ -6,12 +6,11 @@ import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.springframework.beans.FatalBeanException;
 
 /**
  * Created by def on 31.03.15.
  */
-public class EmbeddedServer extends AbstractDaemon implements ApplicationThread{
+public class EmbeddedServer extends AbstractDaemon implements ApplicationThread {
     public static final Logger LOG = Logger.getLogger(Application.class);
     private int port;
     private String webXml;
@@ -23,10 +22,9 @@ public class EmbeddedServer extends AbstractDaemon implements ApplicationThread{
     }
 
     public void init() {
-        if (Application.isEmbeddedServerMode()){
+        if (Application.isEmbeddedServerMode()) {
             Application.addThread(this);
-        }
-        else {
+        } else {
             LOG.info("No need to run " + this);
         }
     }
@@ -55,8 +53,7 @@ public class EmbeddedServer extends AbstractDaemon implements ApplicationThread{
         try {
             server.start();
             LOG.info("Embedded server started on port " + port);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException(e.getMessage() + " when starting embedded server");
         }
         super.start();
@@ -76,7 +73,7 @@ public class EmbeddedServer extends AbstractDaemon implements ApplicationThread{
         this.webXml = webXml;
     }
 
-    public String toString(){
+    public String toString() {
 
         return "Embedded server";
     }

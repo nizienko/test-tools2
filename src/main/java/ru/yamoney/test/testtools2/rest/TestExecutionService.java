@@ -22,11 +22,11 @@ import java.util.Date;
 
 @Path("/testExecution")
 public class TestExecutionService {
+    public static final Logger LOG = Logger.getLogger(TestExecutionService.class);
     private final static String BUILD = "Ad hoc";
     private final static String EXECUTION = "default";
-    public static final Logger LOG = Logger.getLogger(TestExecutionService.class);
 
-    public void init(){
+    public void init() {
 
     }
 
@@ -44,7 +44,7 @@ public class TestExecutionService {
             @FormParam("comment") String comment,
             @FormParam("acceptance") String acceptance,
             @FormParam("postponedChecks") String postponedChecks
-    ){
+    ) {
         if ((project == null) || (project.equals(""))) {
             return Response.status(400).entity(buildJSONAnswer(-1, "project is empty")).build();
         }
@@ -74,8 +74,7 @@ public class TestExecutionService {
         int executionStatus;
         try {
             executionStatus = Integer.parseInt(status);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return Response.status(400).entity(buildJSONAnswer(-1, "bad status")).build();
         }
         TestExecution testExecution = new TestExecution();
@@ -94,8 +93,7 @@ public class TestExecutionService {
             try {
                 int acceptanceValue = Integer.parseInt(acceptance);
                 testExecution.setAcceptance(acceptanceValue);
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 LOG.error("Acceptance value not correct int: " + acceptance);
             }
         }
@@ -103,16 +101,14 @@ public class TestExecutionService {
             try {
                 LOG.info(postponedChecks);
                 testExecution.setPostponedCheckList(new JSONArray(postponedChecks));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         try {
             TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             LOG.error(e.getMessage());
             return Response.status(500).entity(buildJSONAnswer(-2, "Server error")).build();

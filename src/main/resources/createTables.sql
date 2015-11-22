@@ -77,7 +77,7 @@ CREATE INDEX execution_issue_index ON
 CREATE INDEX execution_status_index ON
       execution ((data->>'status'));
 
-CREATE INDEX execution_status_index ON
+CREATE INDEX execution_reason_index ON
       execution ((data->>'reason'));
 
 CREATE INDEX acceptance_index ON
@@ -141,6 +141,18 @@ CREATE TABLE services
   id integer NOT NULL DEFAULT nextval('service_id_seq'::regclass),
   data jsonb,
   CONSTRAINT services_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE services
+  OWNER TO postgres;
+
+
+
+CREATE TABLE users
+(
+  data jsonb
 )
 WITH (
   OIDS=FALSE

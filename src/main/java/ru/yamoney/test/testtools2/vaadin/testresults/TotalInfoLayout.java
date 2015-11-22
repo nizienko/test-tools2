@@ -45,25 +45,25 @@ public class TotalInfoLayout extends GridLayout {
 //        updatePage();
     }
 
-    private void updatePage(){
+    private void updatePage() {
         StringBuffer text = new StringBuffer();
         calendar.setTime(new Date());
         calendar.add(Calendar.HOUR, -8);
         filter.setSinceDate(calendar.getTime());
         filter.setToDate(new Date());
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectProjects(filter)) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectProjects(filter)) {
             String project = (String) p.get("project");
             text.append("<h2>" + project + "</h2>");
             filter.setProject(project);
-            for (Map<String, Object> v: daoContainer.getTestExecutionDao().selectVersions(filter)) {
+            for (Map<String, Object> v : daoContainer.getTestExecutionDao().selectVersions(filter)) {
                 String version = (String) v.get("version");
                 text.append("<h3>" + version + "</h3>");
                 filter.setVersion(version);
-                for (Map<String, Object> b: daoContainer.getTestExecutionDao().selectBuilds(filter)) {
+                for (Map<String, Object> b : daoContainer.getTestExecutionDao().selectBuilds(filter)) {
                     String build = (String) b.get("build");
                     filter.setBuild(build);
                     Set<String> issues = new HashSet<>();
-                    for (Map<String, Object> issue: daoContainer.getTestExecutionDao().selectIssues(filter)) {
+                    for (Map<String, Object> issue : daoContainer.getTestExecutionDao().selectIssues(filter)) {
                         issues.add((String) issue.get("issue"));
                     }
                     text.append("<table><tr><td>" + version + "." + build + "</td><td>Always failed tests:</td></tr><tr><td>");
@@ -72,7 +72,7 @@ public class TotalInfoLayout extends GridLayout {
                     int passedSomteimes = 0;
                     int failed = 0;
                     List<String> failedTests = new ArrayList<>();
-                    for (String issue: issues) {
+                    for (String issue : issues) {
                         filter.setIssue(issue);
 
                         filter.setStatus(ExecutionStatus.PASSED.getValue());
@@ -82,11 +82,9 @@ public class TotalInfoLayout extends GridLayout {
                         filter.setStatus(null);
                         if (passedTimes > 0 && failedTimes == 0) {
                             passed++;
-                        }
-                        else if (passedTimes > 0 && failedTimes > 0) {
+                        } else if (passedTimes > 0 && failedTimes > 0) {
                             passedSomteimes++;
-                        }
-                        else if (passedTimes == 0 && failedTimes > 0) {
+                        } else if (passedTimes == 0 && failedTimes > 0) {
                             failed++;
                             failedTests.add(issue + ": " + daoContainer.getTestExecutionDao().getNameByIssue(issue) + "(" + failedTimes + ")");
                         }
@@ -99,7 +97,7 @@ public class TotalInfoLayout extends GridLayout {
                     }
                     text.append("Always failed: " + failed + "<br>");
                     text.append("</td><td>");
-                    for (String failedTest: failedTests) {
+                    for (String failedTest : failedTests) {
                         text.append("<pre>" + failedTest + "<br>");
                     }
                     text.append("</td></tr></table><br>");

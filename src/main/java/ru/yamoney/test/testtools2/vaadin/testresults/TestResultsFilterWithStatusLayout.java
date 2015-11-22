@@ -29,14 +29,11 @@ public class TestResultsFilterWithStatusLayout extends TestResultsFilterLayout {
                 String status = (String) event.getProperty().getValue();
                 if (status == null || "".equals(status)) {
                     filter.setStatus(null);
-                }
-                else if (status.equals("Passed")){
+                } else if (status.equals("Passed")) {
                     filter.setStatus(ExecutionStatus.PASSED.getValue());
-                }
-                else if (status.equals("Failed")){
+                } else if (status.equals("Failed")) {
                     filter.setStatus(ExecutionStatus.FAILED.getValue());
-                }
-                else if (status.equals("Processing")){
+                } else if (status.equals("Processing")) {
                     filter.setStatus(ExecutionStatus.PROCESSING.getValue());
                 }
             }
@@ -57,17 +54,13 @@ public class TestResultsFilterWithStatusLayout extends TestResultsFilterLayout {
                 String status = (String) event.getProperty().getValue();
                 if (status == null || "".equals(status)) {
                     filter.setFailedReason(null);
-                }
-                else if (status.equals("NOT_SET")){
+                } else if (status.equals("NOT_SET")) {
                     filter.setFailedReason(ReasonStatus.NOT_SET.name());
-                }
-                else if (status.equals("UNKNOWN")){
+                } else if (status.equals("UNKNOWN")) {
                     filter.setFailedReason(ReasonStatus.UNKNOWN.name());
-                }
-                else if (status.equals("TEST_STAND")){
+                } else if (status.equals("TEST_STAND")) {
                     filter.setFailedReason(ReasonStatus.TEST_STAND.name());
-                }
-                else if (status.equals("BUG")){
+                } else if (status.equals("BUG")) {
                     filter.setFailedReason(ReasonStatus.BUG.name());
                 }
             }
@@ -78,12 +71,11 @@ public class TestResultsFilterWithStatusLayout extends TestResultsFilterLayout {
         super.addComponent(acceptanceOnlyCheckBox);
     }
 
-    public TestResultsFilter getFilter(){
+    public TestResultsFilter getFilter() {
         TestResultsFilter testResultsFilter = super.getFilter();
         if (acceptanceOnlyCheckBox.getValue()) {
             testResultsFilter.setAcceptance("1");
-        }
-        else {
+        } else {
             testResultsFilter.setAcceptance(null);
         }
         return testResultsFilter;

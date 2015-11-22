@@ -5,5 +5,6 @@ package ru.yamoney.test.testtools2.common;
  */
 public interface ApplicationThread {
     public void start();
+
     public void stop();
 }

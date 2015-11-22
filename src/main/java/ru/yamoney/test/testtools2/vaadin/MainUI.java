@@ -1,10 +1,7 @@
 package ru.yamoney.test.testtools2.vaadin;
 
 
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.UI;
 
 /**

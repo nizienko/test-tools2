@@ -9,7 +9,6 @@ import ru.yamoney.test.testtools2.common.DaoContainer;
 import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.ReasonStatus;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
@@ -17,13 +16,13 @@ import java.util.Map;
 /**
  * Created by def on 26.05.15.
  */
-public class AcceptanceStatisticLayout extends GridLayout{
+public class AcceptanceStatisticLayout extends GridLayout {
     private Label label;
     private DaoContainer daoContainer;
     private Button updateButton;
     private TestResultsFilterLayout filterLayout;
 
-    public AcceptanceStatisticLayout(){
+    public AcceptanceStatisticLayout() {
         super(1, 3);
         this.setRowExpandRatio(2, 1);
         this.setSizeFull();
@@ -45,9 +44,9 @@ public class AcceptanceStatisticLayout extends GridLayout{
         this.addComponent(label);
     }
 
-    private void updatePage(){
+    private void updatePage() {
         StringBuffer out = new StringBuffer();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectProjects(filterLayout.getFilter())) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectProjects(filterLayout.getFilter())) {
             String project = (String) p.get("project");
             out.append("<h2>" + project + "</h2>");
             filterLayout.getFilter().setProject(project);
@@ -76,11 +75,11 @@ public class AcceptanceStatisticLayout extends GridLayout{
         label.setValue(out.toString());
     }
 
-    private int getCount(){
+    private int getCount() {
         return daoContainer.getTestExecutionDao().countByFilter(filterLayout.getFilter());
     }
 
-    private String getPercentage(int y, int z){
+    private String getPercentage(int y, int z) {
 
         return new BigDecimal(y).setScale(4).divide(new BigDecimal(z).setScale(4), RoundingMode.HALF_UP).setScale(8)
                 .multiply(new BigDecimal(100)).setScale(2).toPlainString() + "%";

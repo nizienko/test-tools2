@@ -2,16 +2,14 @@ package ru.yamoney.test.testtools2.vaadin;
 
 import com.vaadin.ui.TabSheet;
 import ru.yamoney.test.testtools2.vaadin.testresults.*;
-import ru.yamoney.test.testtools2.vaadin.manage.ManageLayout;
 import ru.yamoney.test.testtools2.vaadin.testsettings.TestSettingsLayout;
-import ru.yamoney.test.testtools2.vaadin.teststand.ServicesLayout;
 import ru.yamoney.test.testtools2.vaadin.teststand.TestStandLayout;
 
 /**
  * Created by def on 18.04.15.
  */
 public class TestToolsTabSheet extends TabSheet {
-    public TestToolsTabSheet(){
+    public TestToolsTabSheet() {
         this.setSizeFull();
         this.addTab(new TestStandLayout(), "Test stand");
 //        this.addTab(new ServicesLayout(), "Services");

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="http://127.0.0.1:8080/rest/user/add" method="post">
+    <table>
+        <tr>
+            <td>add</td>
+            <td><input type="text" name="account" value="41003456456908"></td>
+            <td><input type="text" name="host" value="boulogne"></td>
+            <td><input type="text" name="userName" value="userName11"></td>
+            <td><input type="text" name="phone" value="79250910500"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit">
+            </td>
+        </tr>
+    </table>
+</form>
+
+<a href="http://127.0.0.1:8080/rest/user/boulogne/new">get new</a>
+<br>
+<a href="http://127.0.0.1:8080/rest/user/boulogne/old">get old</a>
+<br>
+<a href="http://127.0.0.1:8080/rest/user/boulogne/busy">get busy</a>
+<br>
+<a href="http://127.0.0.1:8080/rest/user/free/41003456456908">free user</a>
+<br>
+<a href="http://127.0.0.1:8080/rest/user/del/41003456456908">del user</a>
+</body>
+</html>

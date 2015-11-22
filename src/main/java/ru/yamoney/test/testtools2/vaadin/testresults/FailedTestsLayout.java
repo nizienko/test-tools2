@@ -19,11 +19,11 @@ import java.util.Map;
  * Created by def on 18.04.15.
  */
 public class FailedTestsLayout extends GridLayout {
+    public static final Logger LOG = Logger.getLogger(FailedTestsLayout.class);
     private Table table;
     private TestResultsFilterLayout testResultsFilterLayout;
     private Button updateButton;
     private DaoContainer daoContainer;
-    public static final Logger LOG = Logger.getLogger(FailedTestsLayout.class);
 
 
     public FailedTestsLayout() {
@@ -57,14 +57,14 @@ public class FailedTestsLayout extends GridLayout {
         this.addComponent(table);
     }
 
-    private void update(){
+    private void update() {
         table.removeAllItems();
         List<String> issues = new ArrayList();
-        for (Map<String, Object> p: daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout.getFilter())) {
+        for (Map<String, Object> p : daoContainer.getTestExecutionDao().selectIssues(testResultsFilterLayout.getFilter())) {
             issues.add((String) p.get("issue"));
         }
         int i = 1;
-        for (String issue: issues) {
+        for (String issue : issues) {
             testResultsFilterLayout.getFilter().setIssueTemp(issue);
             testResultsFilterLayout.getFilter().setStatus(ExecutionStatus.FAILED.getValue());
             List<TestExecution> failedTests = daoContainer.getTestExecutionDao().getByFilter(testResultsFilterLayout.getFilter());
@@ -76,22 +76,20 @@ public class FailedTestsLayout extends GridLayout {
                     try {
                         lastSuccessTest = daoContainer.getTestExecutionDao().getLastPassed(issue);
 
-                    }
-                    catch (EmptyResultDataAccessException e){
+                    } catch (EmptyResultDataAccessException e) {
                         lastSuccessTest = new TestExecution();
                     }
                     try {
-                    table.addItem(new Object[]{
-                            i,
-                            issue,
-                            failedTests.get(0).getName(),
-                            failedTests.size(),
-                            lastSuccessTest.getExecutionDt(),
-                            lastSuccessTest.getProject() + "." + lastSuccessTest.getVersion() + "." + lastSuccessTest.getBuild() + "." + lastSuccessTest.getExecution()
-                    }, new Integer(i));
-                    i++;
-                    }
-                    catch (NullPointerException e) {
+                        table.addItem(new Object[]{
+                                i,
+                                issue,
+                                failedTests.get(0).getName(),
+                                failedTests.size(),
+                                lastSuccessTest.getExecutionDt(),
+                                lastSuccessTest.getProject() + "." + lastSuccessTest.getVersion() + "." + lastSuccessTest.getBuild() + "." + lastSuccessTest.getExecution()
+                        }, new Integer(i));
+                        i++;
+                    } catch (NullPointerException e) {
                         LOG.error("Failed load test execution " + issue + "\n" + e.getMessage());
                     }
                 }

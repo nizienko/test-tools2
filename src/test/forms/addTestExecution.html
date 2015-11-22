@@ -1,40 +1,52 @@
 <html>
-    <head><title>addTestExecution</title></head>
-    <body>
-        <form action="http://127.0.0.1:8080/rest/testExecution/add" method="post">
-            <table>
-                <tr>
-                    <td>project</td><td><input type="text" name="project" value="project"></td>
-                </tr>
-                <tr>
-                    <td>version</td><td><input type="text" name="version" value="version"></td>
-                </tr>
-                <tr>
-                    <td>build</td><td><input type="text" name="build" value="build"></td>
-                </tr>
-                <tr>
-                    <td>execution</td><td><input type="text" name="execution" value="execution"></td>
-                </tr>
-                <tr>
-                    <td>issue</td><td><input type="text" name="issue" value="issue"></td>
-                </tr>
-                <tr>
-                    <td>name</td><td><input type="text" name="name" value="name"></td>
-                </tr>
-                <tr>
-                    <td>status</td><td><input type="text" name="status" value="10"></td>
-                </tr>
-                <tr>
-                    <td>comment</td><td><input type="text" name="comment" value="comment"></td>
-                </tr>
-                <tr>
-                    <td>acceptance</td><td><input type="text" name="acceptance" value="1"></td>
-                </tr>
-                <tr>
-                    <td>postponed checks</td><td><input type="text" name="postponedChecks" value="[{'description':'test1', 'type':'1','select':'select 1 from dual', 'scheduledDate':'2015.09.08 16:30:00', 'expectedResult':'1', 'dataSource': '21_calypso_db'}]"></td>
-                </tr>
-            <input type="submit">
-            </table>
-        </form>
-    </body>
+<head><title>addTestExecution</title></head>
+<body>
+<form action="http://127.0.0.1:8080/rest/testExecution/add" method="post">
+    <table>
+        <tr>
+            <td>project</td>
+            <td><input type="text" name="project" value="project"></td>
+        </tr>
+        <tr>
+            <td>version</td>
+            <td><input type="text" name="version" value="version"></td>
+        </tr>
+        <tr>
+            <td>build</td>
+            <td><input type="text" name="build" value="build"></td>
+        </tr>
+        <tr>
+            <td>execution</td>
+            <td><input type="text" name="execution" value="execution"></td>
+        </tr>
+        <tr>
+            <td>issue</td>
+            <td><input type="text" name="issue" value="issue"></td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td><input type="text" name="name" value="name"></td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td><input type="text" name="status" value="10"></td>
+        </tr>
+        <tr>
+            <td>comment</td>
+            <td><input type="text" name="comment" value="comment"></td>
+        </tr>
+        <tr>
+            <td>acceptance</td>
+            <td><input type="text" name="acceptance" value="1"></td>
+        </tr>
+        <tr>
+            <td>postponed checks</td>
+            <td><input type="text" name="postponedChecks"
+                       value="[{'description':'test1', 'type':'1','select':'select 1 from dual', 'scheduledDate':'2015.09.08 16:30:00', 'expectedResult':'1', 'dataSource': '21_calypso_db'}]">
+            </td>
+        </tr>
+        <input type="submit">
+    </table>
+</form>
+</body>
 </html>

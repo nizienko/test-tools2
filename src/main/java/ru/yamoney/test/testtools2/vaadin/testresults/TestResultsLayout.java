@@ -12,7 +12,8 @@ import ru.yamoney.test.testtools2.testmanager.TestExecution;
 
 import java.util.Date;
 
-import static ru.yamoney.test.testtools2.testmanager.ExecutionStatus.*;
+import static ru.yamoney.test.testtools2.testmanager.ExecutionStatus.PASSED;
+import static ru.yamoney.test.testtools2.testmanager.ExecutionStatus.PROCESSING;
 
 /**
  * Created by def on 08.04.15.
@@ -33,7 +34,7 @@ public class TestResultsLayout extends GridLayout {
 
         testResultsFilterLayout = new TestResultsFilterWithStatusLayout(daoContainer);
         this.addComponent(testResultsFilterLayout);
-        HorizontalLayout buttonsLayout= new HorizontalLayout();
+        HorizontalLayout buttonsLayout = new HorizontalLayout();
         updateButton = new Button("Update");
         updateButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -107,15 +108,14 @@ public class TestResultsLayout extends GridLayout {
         });
     }
 
-    private void update(){
+    private void update() {
         table.removeAllItems();
         int i = 1;
         for (TestExecution te : daoContainer.getTestExecutionDao().getByFilter(testResultsFilterLayout.getFilter())) {
             String status = "failed";
             if (te.getStatus() == 5) {
                 status = "passed";
-            }
-            else if (te.getStatus() == 10){
+            } else if (te.getStatus() == 10) {
                 status = "processing";
             }
             table.addItem(new Object[]{
@@ -151,8 +151,7 @@ public class TestResultsLayout extends GridLayout {
         sb.append("Status: " + te.getStatus() + "<br>");
         if (te.isPublicated() == 1) {
             sb.append("Published<br>");
-        }
-        else {
+        } else {
             sb.append("Not published<br>");
         }
         label.setValue(sb.toString());
@@ -201,8 +200,7 @@ public class TestResultsLayout extends GridLayout {
                     }
                     editWindow.close();
                     update();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -216,7 +214,7 @@ public class TestResultsLayout extends GridLayout {
 
     }
 
-    private void export(){
+    private void export() {
         TestResultsFilter filter = testResultsFilterLayout.getFilter();
         Window exportWindow = new Window(filter.toString());
         exportWindow.setWidth("700px");
@@ -231,8 +229,7 @@ public class TestResultsLayout extends GridLayout {
             String status = "failed";
             if (te.getStatus() == PASSED.getIntegerValue()) {
                 status = "passed";
-            }
-            else if (te.getStatus() == PROCESSING.getIntegerValue()){
+            } else if (te.getStatus() == PROCESSING.getIntegerValue()) {
                 status = "processing";
             }
             text.append(te.getIssue() + ": " + te.getName() + " (" + te.getComment() + ") - " + status + "\n");

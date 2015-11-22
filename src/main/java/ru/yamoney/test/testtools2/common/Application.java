@@ -1,15 +1,12 @@
 package ru.yamoney.test.testtools2.common;
 
-import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HttpContext;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +32,13 @@ public class Application {
         at.start();
     }
 
-    public static void stopThread(ApplicationThread at){
+    public static void stopThread(ApplicationThread at) {
         at.stop();
         apps.remove(at);
     }
 
-    public static void stopAllThreads(){
-        for (ApplicationThread at : apps){
+    public static void stopAllThreads() {
+        for (ApplicationThread at : apps) {
             at.stop();
             LOG.info(at + " will stop");
         }
@@ -57,7 +54,7 @@ public class Application {
         return ctx;
     }
 
-    public static CloseableHttpClient getHttpClient(){
+    public static CloseableHttpClient getHttpClient() {
         return httpClient;
     }
 
@@ -65,7 +62,7 @@ public class Application {
         return embeddedServerMode;
     }
 
-    private static void createHttpClient(){
+    private static void createHttpClient() {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setSocketTimeout(3000)
                 .setConnectTimeout(3000)

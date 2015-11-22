@@ -17,7 +17,7 @@ public class TestManager implements TestExecutionNotifier {
         subscribers = new ArrayList<>();
     }
 
-    public synchronized void addTestExecution(TestExecution testExecution){
+    public synchronized void addTestExecution(TestExecution testExecution) {
         // Save execution in db
         daoContainer.getTestExecutionDao().insert(testExecution);
         // Notifying subscribers

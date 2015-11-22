@@ -39,8 +39,7 @@ public class PostponedSelectCheck implements PostponedCheck {
                 if (executionStatus == null) {
                     executionStatus = ExecutionStatus.PROCESSING.getIntegerValue();
                 }
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 executionStatus = ExecutionStatus.PROCESSING.getIntegerValue();
             }
 
@@ -66,15 +65,14 @@ public class PostponedSelectCheck implements PostponedCheck {
         }
     }
 
-    public void process(){
+    public void process() {
         if (executionStatus == ExecutionStatus.PROCESSING.getIntegerValue()
                 && new Date().compareTo(scheduledDate) > 0) {
             TestStand testStand = (TestStand) Application.getCtx().getBean("testStand");
             JdbcTemplate jdbcTemplate = testStand.getJdbcTemplateContainer().getJdbcTemplates().get(dataSource);
             if (jdbcTemplate == null) {
                 executionStatus = ExecutionStatus.FAILED.getIntegerValue();
-            }
-            else {
+            } else {
                 try {
                     if (select.toUpperCase().startsWith("SELECT") && !(select.toUpperCase().contains("FOR UPDATE"))) {
                         LOG.info("select: " + select);
@@ -111,11 +109,11 @@ public class PostponedSelectCheck implements PostponedCheck {
         }
     }
 
-    public int getStatus(){
+    public int getStatus() {
         return executionStatus;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 

@@ -32,7 +32,7 @@ public class TestSettingsService {
             @PathParam("tk") String tk,
             @QueryParam(value = "contains")
             String contains
-    ){
+    ) {
         LOG.info("tk=" + tk);
         LOG.info("contains=" + contains);
         return Response.status(200).entity(buildXMLAnswer(this.getXmlSettings(tk, contains))).build();
@@ -88,6 +88,7 @@ public class TestSettingsService {
         mainNode.setText(error);
         return doc;
     }
+
     protected String buildXMLAnswer(Document doc) {
         StringWriter result = new StringWriter();
         try {

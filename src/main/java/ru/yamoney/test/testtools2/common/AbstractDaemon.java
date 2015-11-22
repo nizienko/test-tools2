@@ -11,17 +11,17 @@ public abstract class AbstractDaemon implements Runnable {
     private Integer period;
     private Boolean run;
 
-    public AbstractDaemon(Integer period){
+    public AbstractDaemon(Integer period) {
         this.period = period;
         run = true;
     }
 
-    public void start(){
+    public void start() {
         Thread thread = new Thread(this);
         thread.start();
     }
 
-    public void stop(){
+    public void stop() {
         run = false;
         LOG.info("Stopping daemon");
     }

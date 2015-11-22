@@ -26,7 +26,7 @@ public class DataBaseService {
             @PathParam("dataSource") String dataSource,
             @QueryParam(value = "sql")
             String SQL
-    ){
+    ) {
         LOG.info("sql=" + SQL);
         TestStand testStand = (TestStand) Application.getCtx().getBean("testStand");
         JdbcTemplate jdbcTemplate = testStand.getJdbcTemplateContainer().getJdbcTemplates().get(dataSource);
@@ -40,23 +40,20 @@ public class DataBaseService {
         try {
             if (SQL.toUpperCase().startsWith("SELECT") && !(SQL.replaceAll(";", "").toUpperCase().endsWith("FOR UPDATE"))) {
                 List<Map<String, Object>> result = jdbcTemplate.queryForList(SQL);
-                for (Map<String, Object> str: result) {
+                for (Map<String, Object> str : result) {
                     JSONObject strObject = new JSONObject();
-                    for (Map.Entry<String, Object> entry : str.entrySet())
-                    {
+                    for (Map.Entry<String, Object> entry : str.entrySet()) {
                         strObject.put(entry.getKey(), entry.getValue());
                     }
                     jsonObject.put(i, strObject);
                     i++;
                 }
-            }
-            else {
+            } else {
                 JSONObject errorJsonObject = new JSONObject();
                 errorJsonObject.put("error", "sql must starts with select");
                 return Response.status(200).entity(errorJsonObject.toString()).build();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JSONObject errorJsonObject = new JSONObject();
             errorJsonObject.put("error", e.getMessage());
             return Response.status(200).entity(errorJsonObject.toString()).build();

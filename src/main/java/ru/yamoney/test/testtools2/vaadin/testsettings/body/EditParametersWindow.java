@@ -1,7 +1,6 @@
 package ru.yamoney.test.testtools2.vaadin.testsettings.body;
 
 
-
 import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -13,12 +12,12 @@ import ru.yamoney.test.testtools2.testmanager.TestParameter;
  * Created by nizienko on 13.11.14.
  */
 public class EditParametersWindow extends Window {
+    private final String width = "600px";
+    private final String width2 = "500px";
     private DaoContainer daoContainer;
     private Table table;
     private Button updateButton;
     private CheckBox really;
-    private final String width = "600px";
-    private final String width2 = "500px";
 
 
     public EditParametersWindow() {
