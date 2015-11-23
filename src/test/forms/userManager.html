@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form action="http://jenkins-ot.test.yamoney.ru/ttools2/rest/user/add" method="post">
+<form action="http://127.0.0.1:8080/rest/user/add" method="post">
     <table>
         <tr>
             <td>add</td>
@@ -31,5 +31,18 @@
 <a href="http://127.0.0.1:8080/rest/user/free/41003456456908">free user</a>
 <br>
 <a href="http://127.0.0.1:8080/rest/user/del/41003456456908">del user</a>
+<br>
+SELECT a.host, a.new, b.old, c.busy from
+(SELECT data->>'host' host, count(*) new
+FROM users where data->>'status' = '0' group by host) as a
+left join
+(SELECT data->>'host' host, count(*) old
+FROM users where data->>'status' = '2' group by host) as b
+on a.host = b.host
+left join
+(SELECT data->>'host' host, count(*) busy
+FROM users where data->>'status' = '1' group by host) as c
+on a.host = c.host
+
 </body>
 </html>
