@@ -63,11 +63,13 @@ public class CashedUserService {
             @FormParam("account") String account,
             @FormParam("userName") String userName,
             @FormParam("phone") String phone,
-            @FormParam("host") String host
+            @FormParam("host") String host,
+            @FormParam("password") String password
+
     ) {
         try {
             UserManager userManager = (UserManager) Application.getCtx().getBean("userManager");
-            User user = userManager.addUser(account, host, phone, userName);
+            User user = userManager.addUser(account, host, phone, userName, password);
             return Response.status(200).entity(user.getJsonString()).build();
         }
         catch (Exception e) {

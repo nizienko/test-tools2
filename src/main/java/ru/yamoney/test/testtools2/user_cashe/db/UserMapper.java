@@ -19,6 +19,7 @@ public class UserMapper implements RowMapper<User> {
         try {
             JSONObject dataObject = new JSONObject(rs.getString("data"));
             user.setAccount(dataObject.getString("account"));
+            user.setPassword(dataObject.getString("password"));
             user.setHost(dataObject.getString("host"));
             user.setPhone(dataObject.getString("phone"));
             user.setUserName(dataObject.getString("userName"));

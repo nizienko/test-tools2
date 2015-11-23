@@ -1,6 +1,5 @@
 package ru.yamoney.test.testtools2.postponecheck;
 
-import com.sun.istack.internal.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +9,6 @@ import org.json.JSONObject;
  * Time: 14:02
  */
 public class PostponerdCheckFactory {
-    @Nullable
     public static PostponedCheck getPostponedCheck(JSONObject jsonObject) {
         try {
             if (jsonObject.getInt("type") == PostponedCheckType.SELECT.getValue()) {

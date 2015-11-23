@@ -28,10 +28,9 @@ public class UserDao {
         String SQL = "SELECT data" +
                 " FROM users WHERE data->>'host'=? and data->>'status'=? limit 1;\n";
         User user = jdbcTemplate.queryForObject(SQL, new Object[] { host, status.getValue() + "" }, new UserMapper());
-        user = setStatus(user.getAccount(), UserStatus.BUSY);
+        user = setStatus(user, UserStatus.BUSY);
         return user;
     }
-
 
     private User getUser(String account) {
         String SQL = "SELECT data\n" +
@@ -68,13 +67,21 @@ public class UserDao {
         return user;
     }
 
-    public User addUser(String account, String userName, String host, String phone){
+    @Transactional
+    public User setStatus(User user, UserStatus userStatus) {
+        user.setStatus(userStatus);
+        storeUser(user);
+        return user;
+    }
+
+    public User addUser(String account, String userName, String password, String host, String phone){
         User user = new User();
         user.setStatus(UserStatus.NEW);
         user.setAccount(account);
         user.setHost(host);
         user.setUserName(userName);
         user.setPhone(phone);
+        user.setPassword(password);
         String SQL = "INSERT into users (data) values (?::jsonb);";
         jdbcTemplate.update(SQL, new Object[]{user.getJsonString()});
         return user;

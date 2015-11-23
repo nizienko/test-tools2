@@ -25,8 +25,8 @@ public class UserManager {
         userDao.setStatus(account, UserStatus.USED);
     }
 
-    public User addUser(String account, String host, String phone, String userName) {
-        return userDao.addUser(account, userName, host, phone);
+    public User addUser(String account, String host, String phone, String userName, String password) {
+        return userDao.addUser(account, userName, password, host, phone);
     }
 
 }

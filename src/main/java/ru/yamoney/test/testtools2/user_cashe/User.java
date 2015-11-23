@@ -11,6 +11,7 @@ public class User {
     private String account;
     private String host;
     private String phone;
+    private String password;
     private UserStatus status;
 
     public String getUserName() {
@@ -53,10 +54,19 @@ public class User {
         this.status = status;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getJsonString(){
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userName", userName);
+            jsonObject.put("password", password);
             jsonObject.put("account", account);
             jsonObject.put("host", host);
             jsonObject.put("phone", phone);
