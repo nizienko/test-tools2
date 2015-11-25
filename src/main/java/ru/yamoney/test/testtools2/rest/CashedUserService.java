@@ -28,18 +28,18 @@ public class CashedUserService {
             @PathParam("type") String type
             ) {
         try {
-            UserManager userManager = (UserManager) Application.getCtx().getBean("userManager");
+            final UserManager userManager = (UserManager) Application.getCtx().getBean("userManager");
             User user = null;
-            if ("new".equals(type)) {
+            if (UserStatus.NEW.getRestName().equals(type)) {
                 user = userManager.getUser(host, UserStatus.NEW);
-            } else if ("old".equals(type)) {
+            } else if (UserStatus.USED.getRestName().equals(type)) {
                 try {
                     user = userManager.getUser(host, UserStatus.USED);
                 }
                 catch (EmptyResultDataAccessException e) {
                     user = userManager.getUser(host, UserStatus.NEW);
                 }
-            } else if ("busy".equals(type)) {
+            } else if (UserStatus.BUSY.getRestName().equals(type)) {
                 user = userManager.getUser(host, UserStatus.BUSY);
             }
             if (user != null) {

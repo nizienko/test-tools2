@@ -70,7 +70,7 @@ public class User {
             jsonObject.put("account", account);
             jsonObject.put("host", host);
             jsonObject.put("phone", phone);
-            jsonObject.put("status", status.getValue() + "");
+            jsonObject.put("status", String.valueOf(status.getValue()));
         } catch (JSONException e) {
             e.printStackTrace();
         }

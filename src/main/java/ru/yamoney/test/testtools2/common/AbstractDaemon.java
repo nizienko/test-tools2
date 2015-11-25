@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
 public abstract class AbstractDaemon implements Runnable {
     public static final Logger LOG = Logger.getLogger(AbstractDaemon.class);
 
-    private Integer period;
-    private Boolean run;
+    private final Integer period;
+    private boolean run;
 
     public AbstractDaemon(Integer period) {
         this.period = period;

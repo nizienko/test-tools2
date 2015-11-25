@@ -13,7 +13,6 @@ public class TestToolsTabSheet extends TabSheet {
     public TestToolsTabSheet() {
         this.setSizeFull();
         this.addTab(new TestStandLayout(), "Test stand");
-//        this.addTab(new ServicesLayout(), "Services");
         this.addTab(new TotalInfoLayout(), "8 hours summary");
         this.addTab(new TestResultsLayout(), "Results");
         this.addTab(new FailedTestsLayout(), "Failed tests");

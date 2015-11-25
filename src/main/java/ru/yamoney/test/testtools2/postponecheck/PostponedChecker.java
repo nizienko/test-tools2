@@ -13,7 +13,7 @@ import java.util.List;
 public class PostponedChecker {
     public static final Logger LOG = Logger.getLogger(PostponedChecker.class);
 
-    private DaoContainer daoContainer;
+    private final DaoContainer daoContainer;
 
     public PostponedChecker(DaoContainer daoContainer) {
         this.daoContainer = daoContainer;
@@ -26,7 +26,7 @@ public class PostponedChecker {
                 int passedChecks = 0;
                 int processingChecks = 0;
                 int failedChecks = 0;
-                StringBuffer comment = new StringBuffer();
+                final StringBuffer comment = new StringBuffer();
                 for (PostponedCheck postponedCheck : testExecution.getPostponedCheckList()) {
                     LOG.info(postponedCheck.getJSON());
                     postponedCheck.process();

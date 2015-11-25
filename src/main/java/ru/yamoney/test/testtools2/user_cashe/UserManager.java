@@ -7,7 +7,7 @@ import ru.yamoney.test.testtools2.user_cashe.db.UserDao;
  * Created by def on 22.11.15.
  */
 public class UserManager {
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserManager(DaoContainer daoContainer){
         this.userDao = daoContainer.getUserDao();

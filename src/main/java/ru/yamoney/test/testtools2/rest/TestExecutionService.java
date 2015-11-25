@@ -77,7 +77,7 @@ public class TestExecutionService {
         } catch (NumberFormatException e) {
             return Response.status(400).entity(buildJSONAnswer(-1, "bad status")).build();
         }
-        TestExecution testExecution = new TestExecution();
+        final TestExecution testExecution = new TestExecution();
         testExecution.setProject(project);
         testExecution.setVersion(version);
         testExecution.setBuild(build);
@@ -106,7 +106,7 @@ public class TestExecutionService {
             }
         }
         try {
-            TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
+            final TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addTestExecution(testExecution);
         } catch (Exception e) {
             e.printStackTrace();

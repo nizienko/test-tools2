@@ -53,7 +53,7 @@ public class InvestigatorDaemon extends AbstractDaemon implements ApplicationThr
 
     private void subscribe() {
         if (!isSubscribed) {
-            TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
+            final TestManager testManager = (TestManager) Application.getCtx().getBean("testManager");
             testManager.addSubscriber(this);
             isSubscribed = true;
         }

@@ -40,7 +40,7 @@ public class Application {
     public static void stopAllThreads() {
         for (ApplicationThread at : apps) {
             at.stop();
-            LOG.info(at + " will stop");
+            LOG.info(at + " going to stop");
         }
         apps.clear();
     }
@@ -63,7 +63,7 @@ public class Application {
     }
 
     private static void createHttpClient() {
-        RequestConfig defaultRequestConfig = RequestConfig.custom()
+        final RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setSocketTimeout(3000)
                 .setConnectTimeout(3000)
                 .setConnectionRequestTimeout(3000)

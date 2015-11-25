@@ -11,11 +11,11 @@ import ru.yamoney.test.testtools2.user_cashe.db.UserDao;
  * Created by def on 02.04.15.
  */
 public class DaoContainer {
-    private TestExecutionDao testExecutionDao;
-    private TestSettingDao testSettingDao;
-    private TestStandDao testStandDao;
-    private ServiceDao serviceDao;
-    private UserDao userDao;
+    private final TestExecutionDao testExecutionDao;
+    private final TestSettingDao testSettingDao;
+    private final TestStandDao testStandDao;
+    private final ServiceDao serviceDao;
+    private final UserDao userDao;
 
     public DaoContainer(JdbcTemplate jdbcTemplate) {
 
