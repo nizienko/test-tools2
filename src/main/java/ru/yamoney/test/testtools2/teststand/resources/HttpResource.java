@@ -89,7 +89,6 @@ public class HttpResource implements Resource {
                 EntityUtils.consumeQuietly(response.getEntity());
             }
         } catch (Exception e) {
-            e.printStackTrace();
             LOG.error("ERROR: " + e.getMessage());
             resourceStatus.setStatus(false, e.getMessage());
         } finally {

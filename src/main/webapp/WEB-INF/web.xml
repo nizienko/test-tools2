@@ -38,4 +38,39 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>InformerUI</servlet-name>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <init-param>
+            <description>Vaadin application</description>
+            <param-name>UI</param-name>
+            <param-value>ru.yamoney.test.testtools2.vaadin.informer_ui.InformerUI</param-value>
+            <name>widgetset</name>
+            <value>com.vaadin.DefaultWidgetSet</value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InformerUI</servlet-name>
+        <url-pattern>/informer/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Info</servlet-name>
+        <servlet-class>ru.yamoney.test.testtools2.info.InfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Info</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>InfoJsp</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>InfoJsp</servlet-name>
+        <url-pattern>/status</url-pattern>
+    </servlet-mapping>
+
 </web-app>

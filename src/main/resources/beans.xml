@@ -67,4 +67,8 @@
         <constructor-arg ref="daoContainer"/>
     </bean>
 
+    <bean id="informer" class="ru.yamoney.test.testtools2.info.Informer" scope="singleton">
+        <constructor-arg ref="testManager"/>
+    </bean>
+
 </beans>
