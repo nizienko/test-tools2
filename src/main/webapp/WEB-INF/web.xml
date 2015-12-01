@@ -5,6 +5,11 @@
     <listener>
         <listener-class>ru.yamoney.test.testtools2.common.ContextListener</listener-class>
     </listener>
+    <context-param>
+        <param-name>productionMode</param-name>
+        <param-value>false</param-value>
+        <description>Vaadin production mode</description>
+    </context-param>
     <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
         <servlet-class>
@@ -40,7 +45,7 @@
 
     <servlet>
         <servlet-name>InformerUI</servlet-name>
-        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
         <init-param>
             <description>Vaadin application</description>
             <param-name>UI</param-name>

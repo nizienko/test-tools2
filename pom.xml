@@ -31,6 +31,24 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-maven-plugin</artifactId>
+
+            <executions>
+                <execution>
+
+                    <goals>
+                        <goal>clean</goal>
+                        <goal>resources</goal>
+                        <goal>update-theme</goal>
+                        <goal>update-widgetset</goal>
+                        <goal>compile-theme</goal>
+                        <goal>compile</goal>
+                    </goals>
+                </execution>
+            </executions>
+            </plugin>
         </plugins>
         <finalName>ttools2</finalName>
     </build>
@@ -131,16 +149,17 @@
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+
         <!--        <dependency>
                     <groupId>at.downdrown.vaadinaddons</groupId>
                     <artifactId>highchartsapi</artifactId>
                     <version>1.7.2</version>
                 </dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.3.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-websocket</artifactId>

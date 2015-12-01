@@ -23,12 +23,19 @@ public class Informer implements TestExecutionSubscriber {
     @Override
     public void addTestExecution(TestExecution testExecution) {
         testExecutions.add(testExecution);
-        if (testExecutions.size() > 10) {
+        if (testExecutions.size() > 100) {
             testExecutions.remove(0);
         }
     }
 
-    public List<TestExecution> getExecutions(){
+    public List<TestExecution> getExecutions(TestExecution lastExecution){
+        if (lastExecution != null) {
+            int lastIndex = testExecutions.indexOf(lastExecution);
+            if (lastIndex >= 0) {
+                List<TestExecution> filteredList = testExecutions.subList(lastIndex + 1, testExecutions.size());
+                return filteredList;
+            }
+        }
         return testExecutions;
     }
 }

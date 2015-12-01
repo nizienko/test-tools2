@@ -24,4 +24,38 @@
   .v-table-cell-content-not_run {
     background: #CED8F6;
   }
+
+    .v-table-cell-content-online_big {
+      background: #B4F4AE;
+	  font-size: 23px;
+	  height: 40;
+    }
+
+    .v-table-cell-content-offline_big {
+         background: #FF695C;
+    	 font-size: 23px;
+     	 height: 40;
+    }
+
+    .resource-online {
+      background: #B4F4AE;
+      font-size: 23px;
+      height: 40;
+    }
+
+    .resource-offline {
+         background: #FF695C;
+         font-size: 23px;
+         height: 40;
+    }
+
+    .resource-online_little {
+      background: #B4F4AE;
+      font-size: 16px;
+    }
+
+    .resource-offline_little {
+         background: #FF695C;
+      font-size: 16px;
+    }
 }

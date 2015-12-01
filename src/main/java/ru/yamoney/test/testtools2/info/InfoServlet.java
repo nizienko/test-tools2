@@ -23,9 +23,7 @@ public class InfoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONArray array = new JSONArray();
-        for (TestExecution testExecution : informer.getExecutions()) {
-            array.put(testExecution.getJSON());
-        }
+
         System.out.println(array.toString());
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("text/event-stream");

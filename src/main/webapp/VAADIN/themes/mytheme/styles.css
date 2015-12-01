@@ -5913,3 +5913,37 @@ body .mytheme.v-app .v-app-loading {
 .mytheme .v-table-cell-content-not_run {
 	background: #CED8F6;
 }
+
+.mytheme .v-table-cell-content-online_big {
+	background: #B4F4AE;
+	font-size: 23px;
+	height: 40;
+}
+
+.mytheme .v-table-cell-content-offline_big {
+	background: #FF695C;
+	font-size: 23px;
+	height: 40;
+}
+
+.mytheme .resource-online {
+	background: #B4F4AE;
+	font-size: 23px;
+	height: 40;
+}
+
+.mytheme .resource-offline {
+	background: #FF695C;
+	font-size: 23px;
+	height: 40;
+}
+
+.mytheme .resource-online_little {
+	background: #B4F4AE;
+	font-size: 16px;
+}
+
+.mytheme .resource-offline_little {
+	background: #FF695C;
+	font-size: 16px;
+}
