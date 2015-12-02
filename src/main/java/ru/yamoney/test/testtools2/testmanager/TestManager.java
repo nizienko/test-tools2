@@ -21,7 +21,6 @@ public class TestManager implements TestExecutionNotifier {
         // Save execution in db
         daoContainer.getTestExecutionDao().insert(testExecution);
         // Notifying subscribers
-        System.out.println(subscribers.size());
         for (TestExecutionSubscriber tes : subscribers) {
             tes.addTestExecution(testExecution);
         }

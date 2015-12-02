@@ -5928,22 +5928,40 @@ body .mytheme.v-app .v-app-loading {
 
 .mytheme .resource-online {
 	background: #B4F4AE;
-	font-size: 23px;
+	font-size: 21px;
 	height: 40;
 }
 
 .mytheme .resource-offline {
 	background: #FF695C;
-	font-size: 23px;
+	font-size: 21px;
 	height: 40;
 }
 
 .mytheme .resource-online_little {
 	background: #B4F4AE;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .mytheme .resource-offline_little {
 	background: #FF695C;
-	font-size: 16px;
+	font-size: 15px;
+}
+
+.mytheme .resource-online td, .mytheme .mytheme .resource-online th {
+	padding: 3px;
+	border: 0;
+}
+
+.mytheme .resource-online td {
+	border-bottom: 2px dotted #000000;
+}
+
+.mytheme .resource-offline td, .mytheme .mytheme .resource-online th {
+	padding: 3px;
+	border: 0;
+}
+
+.mytheme .resource-offline td {
+	border-bottom: 2px dotted #000000;
 }

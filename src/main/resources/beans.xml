@@ -57,10 +57,14 @@
         <property name="testStand" ref="testStand"/>
     </bean>
 
-    <bean id="postponedChecker" class="ru.yamoney.test.testtools2.postponecheck.PostponedCheckDaemon" init-method="init"
+    <bean id="postponedChecker" class="ru.yamoney.test.testtools2.postponecheck.PostponedChecker">
+        <constructor-arg ref="daoContainer"/>
+    </bean>
+
+    <bean id="postponedCheckerDaemon" class="ru.yamoney.test.testtools2.postponecheck.PostponedCheckDaemon" init-method="init"
           scope="singleton">
         <constructor-arg value="10"/>
-        <property name="daoContainer" ref="daoContainer"/>
+        <property name="postponedChecker" ref="postponedChecker"/>
     </bean>
 
     <bean id="userManager" class="ru.yamoney.test.testtools2.user_cashe.UserManager" scope="singleton">
@@ -69,6 +73,7 @@
 
     <bean id="informer" class="ru.yamoney.test.testtools2.info.Informer" scope="singleton">
         <constructor-arg ref="testManager"/>
+        <property name="postponedChecker" ref="postponedChecker"/>
     </bean>
 
 </beans>

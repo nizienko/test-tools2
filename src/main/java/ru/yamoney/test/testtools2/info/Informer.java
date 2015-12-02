@@ -1,6 +1,8 @@
 package ru.yamoney.test.testtools2.info;
 
 import org.apache.log4j.Logger;
+import ru.yamoney.test.testtools2.postponecheck.PostponedChecker;
+import ru.yamoney.test.testtools2.testmanager.ExecutionStatus;
 import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.testmanager.TestExecutionSubscriber;
 import ru.yamoney.test.testtools2.testmanager.TestManager;
@@ -20,11 +22,17 @@ public class Informer implements TestExecutionSubscriber {
         testManager.addSubscriber(this);
     }
 
+    public void setPostponedChecker(PostponedChecker postponedChecker) {
+        postponedChecker.addSubscriber(this);
+    }
+
     @Override
     public void addTestExecution(TestExecution testExecution) {
-        testExecutions.add(testExecution);
-        if (testExecutions.size() > 100) {
-            testExecutions.remove(0);
+        if (testExecution.getStatus() != ExecutionStatus.PROCESSING.getIntegerValue()) {
+            testExecutions.add(testExecution);
+            if (testExecutions.size() > 100) {
+                testExecutions.remove(0);
+            }
         }
     }
 
