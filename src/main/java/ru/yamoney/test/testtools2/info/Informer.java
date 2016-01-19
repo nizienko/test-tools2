@@ -7,6 +7,7 @@ import ru.yamoney.test.testtools2.testmanager.TestExecution;
 import ru.yamoney.test.testtools2.testmanager.TestExecutionSubscriber;
 import ru.yamoney.test.testtools2.testmanager.TestManager;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Informer implements TestExecutionSubscriber {
     private List<TestExecution> testExecutions;
 
     public Informer(TestManager testManager){
-        testExecutions = new LinkedList<>();
+        testExecutions = Collections.synchronizedList(new LinkedList<>());
         testManager.addSubscriber(this);
     }
 
@@ -36,13 +37,11 @@ public class Informer implements TestExecutionSubscriber {
         }
     }
 
-    public List<TestExecution> getExecutions(TestExecution lastExecution){
+    public synchronized List<TestExecution> getExecutions(TestExecution lastExecution){
         if (lastExecution != null) {
             int lastIndex = testExecutions.indexOf(lastExecution);
-            if (lastIndex >= 0) {
-                List<TestExecution> filteredList = testExecutions.subList(lastIndex + 1, testExecutions.size());
-                return filteredList;
-            }
+            if (lastIndex >= 0)
+                return new LinkedList<TestExecution>(testExecutions.subList(lastIndex + 1, testExecutions.size()));
         }
         return testExecutions;
     }

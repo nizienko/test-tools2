@@ -33,6 +33,14 @@ public class UserDao {
         return user;
     }
 
+    @Transactional
+    public User getUserAndSetBusy(String account) {
+        User user = getUser(account);
+        user = setStatus(user, UserStatus.BUSY);
+        return user;
+    }
+
+
     private User getUser(String account) {
         final String SQL = "SELECT data\n" +
                 "  FROM users WHERE data->>'account'=? limit 1;\n";

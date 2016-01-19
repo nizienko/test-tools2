@@ -118,4 +118,26 @@ public class CashedUserService {
             return Response.status(500).entity(jsonObject.toString()).build();
         }
     }
+
+    @GET
+    @Path("/get/{account}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(
+            @PathParam("account") String account
+    ) {
+        try {
+            UserManager userManager = (UserManager) Application.getCtx().getBean("userManager");
+            User user = userManager.getUserByAccount(account);
+            if (user != null) {
+                return Response.status(200).entity(user.getJsonString()).build();
+            }
+            else {
+                throw new IllegalStateException("no such user");
+            }        }
+        catch (Exception e) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("error", e.getMessage());
+            return Response.status(500).entity(jsonObject.toString()).build();
+        }
+    }
 }

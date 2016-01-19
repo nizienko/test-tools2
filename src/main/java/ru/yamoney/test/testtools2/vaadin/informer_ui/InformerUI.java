@@ -21,7 +21,7 @@ public class InformerUI extends UI {
         HorizontalSplitPanel horizontalSplitPanel = new HorizontalSplitPanel();
         horizontalSplitPanel.setFirstComponent(informerTestStandLayout);
         horizontalSplitPanel.setSecondComponent(informerLastTestsLayout);
-        horizontalSplitPanel.setSplitPosition(40, Sizeable.UNITS_PERCENTAGE);
+        horizontalSplitPanel.setSplitPosition(40, Unit.PERCENTAGE);
 
         setContent(horizontalSplitPanel);
         setPollInterval(5000);

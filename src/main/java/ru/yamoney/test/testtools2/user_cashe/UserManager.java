@@ -17,6 +17,8 @@ public class UserManager {
         return userDao.getUser(host, userStatus);
     }
 
+    public User getUserByAccount(String account) { return userDao.getUserAndSetBusy(account); }
+
     public void delUser(String account) {
         userDao.delUser(account);
     }
