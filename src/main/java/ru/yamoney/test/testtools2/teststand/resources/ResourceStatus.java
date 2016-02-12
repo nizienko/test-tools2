@@ -38,8 +38,8 @@ public class ResourceStatus {
         return statusMeassage;
     }
 
-    public void setStatusMeassage(String statusMeassage) {
-        this.statusMeassage = statusMeassage;
+    public void setStatusMeassage(String statusMessage) {
+        this.statusMeassage = statusMessage;
     }
 
     public boolean isBroken() {
