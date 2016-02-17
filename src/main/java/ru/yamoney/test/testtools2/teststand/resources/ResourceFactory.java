@@ -13,6 +13,9 @@ public class ResourceFactory {
             return new CalypsoHttpResource();
         } else if (type.equals(ResourceType.PING.name())) {
             return new PingHttpResource();
-        } else return null;
+        } else if(type.equals(ResourceType.API.name())){
+            return new ApiResource();
+        }
+        else return null;
     }
 }
